@@ -1,0 +1,1871 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduction aux Véhicules Électrifiés & PSD Expert</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Inter & JetBrains Mono -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        carDark: '#070a13',
+                        carPanel: '#0f172a',
+                        carAccent: '#10b981', // Emerald
+                        carVolt: '#f59e0b', // Amber
+                        carBattery: '#3b82f6', // Sky Blue
+                        hudIce: '#10b981',
+                        hudMg1: '#f59e0b',
+                        hudMg2: '#06b6d4'
+                    },
+                    boxShadow: {
+                        'hud-glow': '0 0 15px rgba(6, 182, 212, 0.15)',
+                        'hud-glow-emerald': '0 0 15px rgba(16, 185, 129, 0.2)',
+                        'hud-glow-amber': '0 0 15px rgba(245, 158, 11, 0.2)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #070a13;
+            color: #f1f5f9;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between overflow-x-hidden">
+
+<header class="bg-slate-950 border-b border-slate-800/80 sticky top-0 z-40 px-4 py-3 shadow-2xl">
+    <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+            <div class="bg-gradient-to-tr from-emerald-500 via-cyan-500 to-blue-600 p-2.5 rounded-xl shadow-inner flex items-center justify-center">
+                <i class="fa-solid fa-car-battery text-white text-xl animate-pulse"></i>
+            </div>
+            <div>
+                <h1 class="text-lg md:text-xl font-extrabold tracking-tight bg-gradient-to-r from-emerald-400 via-cyan-400 to-blue-400 bg-clip-text text-transparent">
+                    ÉLECTROMOBILITÉ EXPERT
+                </h1>
+                <p class="text-[10px] text-slate-400 uppercase font-mono tracking-wider">Application Pédagogique Interactive (Réf: resume 01.docx & resume 02.docx)</p>
+            </div>
+        </div>
+        
+        <!-- Tab Navigation Bar -->
+        <nav class="flex flex-wrap gap-1.5 bg-slate-900/95 p-1 rounded-xl border border-slate-850">
+            <button onclick="switchTab('eco')" id="tab-eco" class="nav-btn px-3 py-1.5 rounded-lg text-xs md:text-sm font-semibold transition-all duration-300 flex items-center gap-2 text-slate-400 hover:text-white">
+                <i class="fa-solid fa-leaf"></i> Écoresponsable
+            </button>
+            <button onclick="switchTab('techno')" id="tab-techno" class="nav-btn px-3 py-1.5 rounded-lg text-xs md:text-sm font-semibold text-slate-400 hover:text-white transition-all duration-300 flex items-center gap-2">
+                <i class="fa-solid fa-bolt"></i> Les 5 Familles
+            </button>
+            <button onclick="switchTab('architecture')" id="tab-architecture" class="nav-btn px-3 py-1.5 rounded-lg text-xs md:text-sm font-semibold text-slate-400 hover:text-white transition-all duration-300 flex items-center gap-2 bg-emerald-500 text-white shadow-md">
+                <i class="fa-solid fa-gears"></i> Architectures & PSD
+            </button>
+            <button onclick="switchTab('electricite')" id="tab-electricite" class="nav-btn px-3 py-1.5 rounded-lg text-xs md:text-sm font-semibold text-slate-400 hover:text-white transition-all duration-300 flex items-center gap-2">
+                <i class="fa-solid fa-wave-square"></i> Électricité & Batteries
+            </button>
+            <button onclick="switchTab('quiz')" id="tab-quiz" class="nav-btn px-3 py-1.5 rounded-lg text-xs md:text-sm font-semibold text-slate-400 hover:text-white transition-all duration-300 flex items-center gap-2">
+                <i class="fa-solid fa-graduation-cap"></i> Quiz & Certificat
+            </button>
+        </nav>
+    </div>
+</header>
+
+<!-- MAIN CONTENT WRAPPER -->
+<main class="flex-grow max-w-7xl w-full mx-auto px-4 py-6">
+
+    <!-- TAB 1: ECORESPONSABLE -->
+    <section id="content-eco" class="tab-content hidden space-y-6">
+        <div class="bg-gradient-to-r from-slate-900 to-slate-950 p-6 rounded-2xl border border-slate-800 shadow-xl relative overflow-hidden">
+            <div class="absolute -right-10 -bottom-10 opacity-10 text-emerald-500 text-[180px]">
+                <i class="fa-solid fa-leaf"></i>
+            </div>
+            <div class="relative z-10 max-w-3xl">
+                <span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Concept Clé</span>
+                <h2 class="text-2xl md:text-3xl font-extrabold mt-3 text-white font-sans">Pourquoi la transition vers le véhicule écoresponsable ?</h2>
+                <p class="text-slate-300 mt-2 leading-relaxed text-sm md:text-base">
+                    Un <strong class="text-emerald-400">véhicule écoresponsable</strong> (appelé aussi véhicule écologique, véhicule propre ou <em>eco-friendly vehicle</em>) est conçu pour minimiser son impact néfaste sur l'environnement tout au long de son cycle de vie. Bien qu'il regroupe plusieurs solutions, la majorité d'entre eux sont des <strong class="text-blue-400">véhicules électrifiés</strong>. (Réf : <span class="font-mono text-emerald-400 text-xs">resume 01.docx</span>)
+                </p>
+            </div>
+        </div>
+
+        <!-- Ecologique vs Economique Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Ecological reasons -->
+            <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800/60 shadow-md hover:border-emerald-550/30 transition-all">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="p-3 bg-emerald-500/10 text-emerald-400 rounded-xl border border-emerald-500/20">
+                        <i class="fa-solid fa-earth-americas text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white">Raison Écologique Principale</h3>
+                </div>
+                <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3">
+                    <div class="flex gap-2 text-slate-300 text-sm">
+                        <i class="fa-solid fa-triangle-exclamation text-amber-500 mt-1"></i>
+                        <p><strong class="text-white">Le réchauffement climatique :</strong> Nécessité absolue de limiter l'augmentation de la température globale par la réduction des gaz à effet de serre (CO2, NOx).</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Economic reasons -->
+            <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800/60 shadow-md hover:border-blue-550/30 transition-all">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="p-3 bg-blue-500/10 text-blue-400 rounded-xl border border-blue-500/20">
+                        <i class="fa-solid fa-chart-line text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white">Raisons Économiques Clés</h3>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                    <div class="bg-slate-950 p-3 rounded-lg border border-slate-800">
+                        <span class="text-blue-400 block font-bold"><i class="fa-solid fa-gauge-high"></i> Fuel Efficiency</span>
+                        Efficacité énergétique optimale du moteur électrique face au thermique.
+                    </div>
+                    <div class="bg-slate-950 p-3 rounded-lg border border-slate-800">
+                        <span class="text-blue-400 block font-bold"><i class="fa-solid fa-coins"></i> Coûts Réduits</span>
+                        Économie importante des coûts d’exploitation par kilomètre parcouru.
+                    </div>
+                    <div class="bg-slate-950 p-3 rounded-lg border border-slate-800">
+                        <span class="text-blue-400 block font-bold"><i class="fa-solid fa-filter"></i> Consommation</span>
+                        Réduction drastique ou élimination de la consommation de carburant fossile.
+                    </div>
+                    <div class="bg-slate-950 p-3 rounded-lg border border-slate-800">
+                        <span class="text-blue-400 block font-bold"><i class="fa-solid fa-shield-halved"></i> Indépendance</span>
+                        Limitation stratégique de la dépendance aux carburants fossiles importés.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Eco-responsible Characteristics -->
+        <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800">
+            <h3 class="text-lg font-bold mb-4 text-white flex items-center gap-2">
+                <i class="fa-solid fa-clipboard-list text-emerald-400"></i> Caractéristiques d'un Véhicule Écoresponsable
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+                <div class="bg-slate-950/50 p-4 rounded-xl border border-slate-800 text-center hover:bg-slate-950 transition-all">
+                    <i class="fa-solid fa-cloud-arrow-down text-emerald-400 text-2xl mb-2"></i>
+                    <p class="text-xs font-semibold text-slate-300">Faibles émissions polluantes</p>
+                </div>
+                <div class="bg-slate-950/50 p-4 rounded-xl border border-slate-800 text-center hover:bg-slate-950 transition-all">
+                    <i class="fa-solid fa-battery-three-quarters text-blue-400 text-2xl mb-2"></i>
+                    <p class="text-xs font-semibold text-slate-300">Consommation énergétique réduite</p>
+                </div>
+                <div class="bg-slate-950/50 p-4 rounded-xl border border-slate-800 text-center hover:bg-slate-950 transition-all">
+                    <i class="fa-solid fa-chart-simple text-purple-400 text-2xl mb-2"></i>
+                    <p class="text-xs font-semibold text-slate-300">Meilleure efficacité énergétique</p>
+                </div>
+                <div class="bg-slate-950/50 p-4 rounded-xl border border-slate-800 text-center hover:bg-slate-950 transition-all">
+                    <i class="fa-solid fa-shoe-prints text-teal-400 text-2xl mb-2"></i>
+                    <p class="text-xs font-semibold text-slate-300">Empreinte carbone réduite</p>
+                </div>
+                <div class="bg-slate-950/50 p-4 rounded-xl border border-slate-800 text-center hover:bg-slate-950 transition-all">
+                    <i class="fa-solid fa-microchip text-rose-400 text-2xl mb-2"></i>
+                    <p class="text-xs font-semibold text-slate-300">Technologies plus propres</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TAB 2: LES 5 FAMILLES -->
+    <section id="content-techno" class="tab-content hidden space-y-6">
+        <div class="bg-gradient-to-r from-blue-950/30 to-slate-900 p-6 rounded-2xl border border-slate-800">
+            <h2 class="text-xl md:text-2xl font-extrabold text-white flex items-center gap-2">
+                <i class="fa-solid fa-circle-nodes text-blue-400"></i> Les 5 Familles de Véhicules Électrifiés
+            </h2>
+            <p class="text-sm text-slate-300 mt-1">
+                Les véhicules électrifiés regroupent des technologies variées utilisant l'électricité pour assister ou assurer la propulsion. 
+                Sélectionnez une famille technologique ci-dessous pour l'étudier en détail (Réf : <span class="font-mono text-emerald-400 text-xs">resume 01.docx</span>).
+            </p>
+
+            <!-- Family Quick Selector Buttons -->
+            <div class="flex flex-wrap gap-2 mt-4">
+                <button onclick="showFamily('mhev')" id="btn-fam-mhev" class="fam-btn px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider border transition-all duration-300 bg-blue-650 text-white border-blue-500">
+                    MHEV (Mild)
+                </button>
+                <button onclick="showFamily('hev')" id="btn-fam-hev" class="fam-btn px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider border transition-all duration-300 bg-slate-850 text-slate-300 border-slate-700 hover:bg-slate-750">
+                    HEV (Full)
+                </button>
+                <button onclick="showFamily('phev')" id="btn-fam-phev" class="fam-btn px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider border transition-all duration-300 bg-slate-850 text-slate-300 border-slate-700 hover:bg-slate-750">
+                    PHEV (Plug-in)
+                </button>
+                <button onclick="showFamily('ev')" id="btn-fam-ev" class="fam-btn px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider border transition-all duration-300 bg-slate-850 text-slate-300 border-slate-700 hover:bg-slate-750">
+                    EV / BEV
+                </button>
+                <button onclick="showFamily('fcev')" id="btn-fam-fcev" class="fam-btn px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider border transition-all duration-300 bg-slate-850 text-slate-300 border-slate-700 hover:bg-slate-750">
+                    FCEV (Hydrogène)
+                </button>
+            </div>
+        </div>
+
+        <!-- 1. MHEV -->
+        <div id="card-mhev" class="fam-card block bg-slate-900 p-6 rounded-2xl border border-slate-800 shadow-md">
+            <div class="flex flex-col lg:flex-row gap-6">
+                <div class="flex-grow space-y-4">
+                    <div class="flex items-center gap-3">
+                        <span class="bg-amber-500/10 text-amber-400 border border-amber-500/20 text-xs font-bold px-3 py-1 rounded-full uppercase">Système 48V</span>
+                        <h3 class="text-2xl font-bold text-white">MHEV - Mild Hybrid Electric Vehicle <span class="text-slate-500 text-sm font-normal">(Hybridation Légère)</span></h3>
+                    </div>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        Un MHEV est un véhicule électrifié dans lequel un système électrique aide le moteur thermique lors du démarrage, des accélérations et de certaines phases de conduite, <strong class="text-amber-400">sans jamais permettre une propulsion 100 % électrique</strong>. C'est un <strong>Mild Hybrid</strong> et non pas un Micro Hybrid.
+                    </p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
+                            <span class="font-bold text-blue-450 block mb-1">Système MHSG (Alterno-démarreur) :</span>
+                            Le petit moteur électrique est semblable à un grand alternateur. Il est appelé <strong class="text-white">Mild Hybrid Starter and Generator (MHSG)</strong> et fonctionne comme un alterno-démarreur.
+                        </div>
+                        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
+                            <span class="font-bold text-blue-450 block mb-1">Batterie 48V (DC) :</span>
+                            Utilise généralement une <strong class="text-white">batterie de 48V</strong> placée dans le coffre arrière. Elle stocke et fournit du courant continu (DC) et <strong class="text-amber-400">ne remplace pas la batterie 12V habituelle</strong>.
+                        </div>
+                    </div>
+                    <div class="bg-amber-500/10 text-amber-300 text-xs p-3.5 rounded-xl border border-amber-500/20 flex gap-2">
+                        <i class="fa-solid fa-triangle-exclamation text-base mt-0.5"></i>
+                        <div>
+                            <strong>Remarque :</strong> Un véhicule MHEV n'est absolument pas un véhicule à "zéro-émission". Il est généralement identifiable par l'étiquette <strong>"48V"</strong> ou <strong>"Hybrid 48V"</strong> sur le hayon arrière ou sur les ailes avant.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. HEV -->
+        <div id="card-hev" class="fam-card hidden bg-slate-900 p-6 rounded-2xl border border-slate-800 shadow-md">
+            <div class="flex flex-col lg:flex-row gap-6">
+                <div class="flex-grow space-y-4">
+                    <div class="flex items-center gap-3">
+                        <span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-bold px-3 py-1 rounded-full uppercase">Haute Tension (~200V)</span>
+                        <h3 class="text-2xl font-bold text-white">HEV - Hybrid Electric Vehicle <span class="text-slate-500 text-sm font-normal">(Hybride Classique Autorechargeable)</span></h3>
+                    </div>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        Un HEV est capable d'utiliser un moteur thermique, un moteur électrique ou les deux simultanément pour propulser le véhicule, <strong class="text-emerald-400">sans nécessiter de recharge sur une prise externe</strong>. Selon l’architecture, il permet une conduite 100% électrique relativement limitée.
+                    </p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
+                            <span class="font-bold text-blue-450 block mb-1">Batterie HT (1 à 3 kWh) :</span>
+                            Généralement placée sous la banquette ou entre les sièges et le coffre. Atteignant <strong class="text-rose-500">200V</strong>, elle impose un respect absolu des règles de sécurité ! Recharge via :
+                            <ul class="list-disc pl-4 mt-1 space-y-0.5 text-slate-400">
+                                <li>Puissance résiduelle du thermique</li>
+                                <li>Freinage régénératif</li>
+                            </ul>
+                        </div>
+                        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
+                            <span class="font-bold text-blue-450 block mb-1">Deux Moteurs Électriques :</span>
+                            <strong class="text-white font-mono text-emerald-400">MG1 (P1 / HSG) :</strong> Démarre le thermique, recharge la batterie HT (Puissance : 8 à 45 kW).<br>
+                            <strong class="text-white font-mono text-cyan-400">MG2 (P2) :</strong> Assure la propulsion et régénère au freinage (Grande puissance : 30 à 100 kW). Refroidissement triphasé AC nécessaire.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. PHEV -->
+        <div id="card-phev" class="fam-card hidden bg-slate-900 p-6 rounded-2xl border border-slate-800 shadow-md">
+            <div class="flex flex-col lg:flex-row gap-6">
+                <div class="flex-grow space-y-4">
+                    <div class="flex items-center gap-3">
+                        <span class="bg-blue-500/10 text-blue-400 border border-blue-500/20 text-xs font-bold px-3 py-1 rounded-full uppercase">Plug-In / Rechargeable</span>
+                        <h3 class="text-2xl font-bold text-white">PHEV - Plug-in Hybrid Electric Vehicle <span class="text-slate-500 text-sm font-normal">(Hybride Rechargeable)</span></h3>
+                    </div>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        Le PHEV est un hybride rechargeable sur le réseau électrique externe. Grâce à une capacité de batterie accrue, il offre <strong class="text-blue-400">une autonomie et des performances bien supérieures</strong> en mode 100% électrique par rapport à un HEV classique.
+                    </p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
+                            <span class="font-bold text-blue-450 block mb-1">Batterie HT de grande capacité :</span>
+                            Capacité comprise généralement entre <strong class="text-white">8 kWh et 25 kWh</strong> pour une tension approchant <strong class="text-rose-500">300V</strong>. Elle stocke l'énergie sous forme de courant continu (DC).
+                        </div>
+                        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
+                            <span class="font-bold text-blue-450 block mb-1">Double Trappe :</span>
+                            La marque visuelle d'un PHEV est la présence de <strong class="text-white">deux trappes d'accès</strong> : une trappe carburant classique d'un côté, et une trappe pour la recharge électrique de l'autre.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. EV -->
+        <div id="card-ev" class="fam-card hidden bg-slate-900 p-6 rounded-2xl border border-slate-800 shadow-md">
+            <div class="flex flex-col lg:flex-row gap-6">
+                <div class="flex-grow space-y-4">
+                    <div class="flex items-center gap-3">
+                        <span class="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-xs font-bold px-3 py-1 rounded-full uppercase">0 Émission (Zéro Pollution)</span>
+                        <h3 class="text-2xl font-bold text-white">BEV / EV - Battery Electric Vehicle <span class="text-slate-500 text-sm font-normal">(100% Électrique)</span></h3>
+                    </div>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        L'EV est un véhicule propulsé uniquement par un ou plusieurs moteurs électriques utilisant exclusivement l'énergie stockée dans une batterie haute tension rechargeable sur le réseau électrique. <strong class="text-emerald-400">Ce sont des véhicules à zéro-émission locale.</strong>
+                    </p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
+                            <span class="font-bold text-blue-450 block mb-1">Moteur Triphasé AC (50 à 250 kW) :</span>
+                            Placé sur l'essieu avant, arrière ou les deux. Ils fonctionnent en courant alternatif (AC) triphasé à haut rendement.
+                        </div>
+                        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
+                            <span class="font-bold text-blue-450 block mb-1">Batterie Géante de Plancher (40 à 100 kWh) :</span>
+                            Remplit tout l'espace sous le plancher entre les deux essieux. La tension peut atteindre <strong class="text-rose-500">400V voire 800V</strong> sur certains modèles. Le respect de la consignation électrique est une priorité absolue.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. FCEV -->
+        <div id="card-fcev" class="fam-card hidden bg-slate-900 p-6 rounded-2xl border border-slate-800 shadow-md">
+            <div class="flex flex-col lg:flex-row gap-6">
+                <div class="flex-grow space-y-4">
+                    <div class="flex items-center gap-3">
+                        <span class="bg-indigo-500/15 text-indigo-400 border border-indigo-500/20 text-xs font-bold px-3 py-1 rounded-full uppercase">Hydrogène / Pile à Combustible</span>
+                        <h3 class="text-2xl font-bold text-white">FCEV - Fuel Cell Electric Vehicle <span class="text-slate-500 text-sm font-normal">(Véhicule à Pile à Combustible)</span></h3>
+                    </div>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        Un FCEV est un véhicule électrique qui produit sa propre électricité à bord grâce à une réaction chimique contrôlée entre le <strong class="text-indigo-400">dihydrogène (H2)</strong> stocké sous très haute pression et le dioxygène (O2) de l'air ambiant.
+                    </p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
+                            <span class="font-bold text-blue-450 block mb-1">La Pile à Combustible (Fuel Cell) :</span>
+                            Cœur électrochimique du système. Elle combine l'hydrogène et l'oxygène pour produire de l'électricité haute tension, de la chaleur et <strong class="text-emerald-400">de l'eau pure (H2O) comme unique rejet !</strong>
+                        </div>
+                        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
+                            <span class="font-bold text-blue-450 block mb-1">Réservoirs H2 Haute Pression (700 bars) :</span>
+                            Stockent l'hydrogène sous forme gazeuse dans des réservoirs ultra-robustes en fibre de carbone à <strong class="text-white">700 bars</strong>. Le plein se fait en seulement 3 à 5 minutes.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TAB 3: ARCHITECTURES & PSD -->
+    <section id="content-architecture" class="tab-content block space-y-6">
+        
+        <!-- Architecture grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Series/EREV and Parallel -->
+            <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800/80 space-y-4">
+                <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-diagram-project text-blue-400"></i> Les Différentes Configurations d'Hybridation
+                </h3>
+                
+                <div class="space-y-3 text-xs">
+                    <!-- Series -->
+                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800/60 hover:border-slate-700/65 transition-all">
+                        <span class="font-bold text-emerald-400 block mb-1 uppercase font-mono"><i class="fa-solid fa-link-slash"></i> 1. Hybride en Série (ex: Nissan e-POWER)</span>
+                        <p class="text-slate-300">
+                            Seul le moteur électrique assure la propulsion mécanique des roues. Le moteur thermique est <strong class="text-amber-400">totalement déconnecté des roues</strong> (aucun lien mécanique). Il sert uniquement de générateur électrique pour recharger la batterie HT en roulant. (Réf : <span class="font-mono text-emerald-400">resume 02.docx</span>)
+                        </p>
+                    </div>
+
+                    <!-- EREV -->
+                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800/60 hover:border-slate-700/65 transition-all">
+                        <span class="font-bold text-cyan-400 block mb-1 uppercase font-mono"><i class="fa-solid fa-charging-station"></i> 2. EREV - Extended Range Electric Vehicle (ex: BMW i3 Rex)</span>
+                        <p class="text-slate-300">
+                            Similaire à la série mais <strong class="text-emerald-400">conçu pour maximiser la conduite en mode tout électrique</strong>. Il possède une batterie de plus grande capacité rechargeable sur réseau externe. Le thermique ne démarre comme prolongateur d'autonomie (Range Extender) que lorsque la batterie atteint son seuil de charge critique.
+                        </p>
+                    </div>
+
+                    <!-- Parallel -->
+                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800/60 hover:border-slate-700/65 transition-all">
+                        <span class="font-bold text-blue-400 block mb-1 uppercase font-mono"><i class="fa-solid fa-link"></i> 3. Hybride en Parallèle (FMED vs TMED)</span>
+                        <p class="text-slate-300 mb-2">
+                            Le moteur thermique et le moteur électrique sont tous deux reliés mécaniquement aux roues.
+                        </p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2">
+                            <div class="bg-slate-900/80 p-2.5 rounded border border-slate-800">
+                                <strong class="text-amber-400 font-mono block">FMED (Flywheel Mounted) :</strong>
+                                Moteur électrique monté sur le vilebrequin. <strong class="text-rose-400">Conduite 100% électrique impossible</strong> car le moteur électrique est dépendant du régime du thermique (toujours tournant).
+                            </div>
+                            <div class="bg-slate-900/80 p-2.5 rounded border border-slate-800">
+                                <strong class="text-emerald-400 font-mono block">TMED (Transmission Mounted) :</strong>
+                                Moteur électrique monté après la transmission. <strong class="text-emerald-400">Conduite 100% électrique possible</strong> en déconnectant le thermique via un embrayage de découplage spécial (<strong class="text-white">Engine Clutch</strong>).
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Essieux dissociés -->
+                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800/60 hover:border-slate-700/65 transition-all">
+                        <span class="font-bold text-indigo-400 block mb-1 uppercase font-mono"><i class="fa-solid fa-road"></i> 4. Essieux Dissociés / Hybride par essieu</span>
+                        <p class="text-slate-300">
+                            Le moteur thermique entraîne un essieu (l'avant) et un moteur électrique indépendant entraîne l'autre essieu (l'arrière). <strong class="text-emerald-400">Aucune liaison mécanique centrale (pas d'arbre de transmission)</strong> entre l'avant et l'arrière, la synchronisation est purement électronique (Toyota E-Four, e-AWD, TTR).
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Power Split explanation -->
+            <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800/80 space-y-4">
+                <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-shuffle text-emerald-400"></i> Hybridation à Dérivation de Puissance (Power Split)
+                </h3>
+                <p class="text-xs text-slate-300 leading-relaxed">
+                    C'est l'architecture la plus sophistiquée, caractérisée par sa robustesse et sa compacité. Elle utilise un <strong class="text-emerald-400">Train Épicycloïdal (Train planétaire)</strong> servant de répartiteur mécanique (Power Split Device) pour diviser, combiner et gérer de manière fluide les puissances thermiques et électriques.
+                </p>
+
+                <!-- Planétaire elements list -->
+                <div class="bg-slate-950 p-4 rounded-xl border border-slate-800/80 space-y-2.5 text-xs font-mono">
+                    <h4 class="font-bold text-white mb-2 font-sans text-sm"><i class="fa-solid fa-circle-dot text-indigo-400"></i> Organes du Train Planétaire PSD :</h4>
+                    
+                    <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+                        <span class="font-bold text-amber-500"><i class="fa-solid fa-sun text-xs"></i> SUN GEAR MG1 (Planétaire)</span>
+                        <span class="text-slate-400 text-[10px] text-right">Machine électrique de contrôle / Générateur</span>
+                    </div>
+                    
+                    <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+                        <span class="font-bold text-emerald-500"><i class="fa-solid fa-network-wired text-xs"></i> PORTE-SATELLITES ICE</span>
+                        <span class="text-slate-400 text-[10px] text-right">Moteur Thermique (ICE / MCI)</span>
+                    </div>
+                    
+                    <div class="flex justify-between items-center pb-1">
+                        <span class="font-bold text-cyan-400"><i class="fa-solid fa-circle-notch text-xs"></i> RING MG2 & ROUES (Couronne)</span>
+                        <span class="text-slate-400 text-[10px] text-right font-semibold">Roues & Moteur de Propulsion</span>
+                    </div>
+                </div>
+
+                <div class="bg-slate-950 p-4 rounded-xl border border-slate-800/80">
+                    <span class="text-xs text-slate-400 font-bold block mb-1 uppercase font-sans"><i class="fa-solid fa-chart-line text-cyan-400"></i> Équation Cinématique de Base :</span>
+                    <p class="text-[11px] text-slate-300 leading-relaxed mb-2">
+                        Les vitesses angulaires des trois arbres mobiles tournant autour du même axe sont liées de manière rigide par la formule d'expert :
+                    </p>
+                    <div class="font-mono text-center text-xs py-2 bg-slate-900 rounded border border-slate-800 text-white shadow-inner">
+                        <span class="text-emerald-400">(1 + k) &middot; N<sub>Carrier (ICE)</sub></span> = <span class="text-cyan-400">k &middot; N<sub>Ring (MG2)</sub></span> + <span class="text-amber-400">N<sub>Sun (MG1)</sub></span>
+                    </div>
+                    <p class="text-[10px] text-slate-500 mt-1 font-sans">
+                        Où <strong class="text-white">k</strong> est la constante du train (rapport du nombre de dents, généralement k &approx; 2.6). (Réf : <span class="font-mono text-emerald-400">resume 02.docx</span>)
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- THE PLANETARY GEAR INTERACTIVE LIVE KINETIC SIMULATOR -->
+        <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800/80 shadow-2xl relative overflow-hidden">
+            <!-- Futuristic design background lines -->
+            <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-900/50 via-slate-950 to-slate-950 pointer-events-none -z-10"></div>
+            
+            <div class="flex flex-col xl:flex-row items-stretch gap-6">
+                
+                <!-- Graphic Visualization (Canvas) -->
+                <div class="xl:w-[45%] bg-slate-950/80 p-5 rounded-xl border border-slate-800/80 flex flex-col items-center justify-center relative shadow-hud-glow">
+                    <!-- HUD grid decoration lines -->
+                    <div class="absolute inset-4 border border-cyan-500/5 pointer-events-none rounded-lg"></div>
+                    <div class="absolute top-2 left-4 text-[9px] font-mono text-cyan-500/40 uppercase tracking-widest">Planetary Kinematics HUD v2.5</div>
+                    
+                    <canvas id="planetaryCanvas" width="360" height="360" class="max-w-[340px] w-full aspect-square z-10 filter drop-shadow-[0_0_15px_rgba(6,182,212,0.15)]"></canvas>
+                    
+                    <div class="flex flex-wrap gap-x-4 gap-y-1.5 mt-4 text-[10px] font-mono justify-center border-t border-slate-800/50 pt-3 w-full">
+                        <span class="flex items-center gap-1.5 text-amber-500"><i class="fa-solid fa-circle text-[8px]"></i> SUN GEAR MG1</span>
+                        <span class="flex items-center gap-1.5 text-emerald-400"><i class="fa-solid fa-circle text-[8px]"></i> PORTE-SATELLITES ICE</span>
+                        <span class="flex items-center gap-1.5 text-cyan-400"><i class="fa-solid fa-circle text-[8px]"></i> RING MG2 & ROUES</span>
+                    </div>
+                </div>
+
+                <!-- Control Panel & Mode Explanations -->
+                <div class="xl:w-[55%] flex flex-col justify-between space-y-4">
+                    
+                    <div>
+                        <!-- Header & Mode Presets -->
+                        <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-slate-800 pb-3">
+                            <div>
+                                <h3 class="text-base md:text-lg font-bold text-white flex items-center gap-2">
+                                    <i class="fa-solid fa-atom text-cyan-400 animate-spin-slow"></i> Simulateur Cinématique du PSD (Train Épicycloïdal)
+                                </h3>
+                                <p class="text-[11px] text-slate-400">Sélectionnez une phase de roulage pour observer le sens de rotation réel (Réf: resume 02.docx)</p>
+                            </div>
+                        </div>
+
+                        <!-- Mode Selection Grid -->
+                        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-1.5 mt-3">
+                            <button onclick="setGearMode('ev')" id="mode-gear-ev" class="gear-btn px-2.5 py-2 rounded-lg text-[10px] md:text-xs font-bold font-mono transition border border-emerald-500 bg-emerald-500 text-white shadow-hud-glow-emerald">
+                                EV MODE
+                            </button>
+                            <button onclick="setGearMode('low')" id="mode-gear-low" class="gear-btn px-2.5 py-2 rounded-lg text-[10px] md:text-xs font-bold font-mono text-slate-400 hover:text-white border border-slate-800 hover:border-slate-700 transition">
+                                DÉMARRAGE
+                            </button>
+                            <button onclick="setGearMode('cruise')" id="mode-gear-cruise" class="gear-btn px-2.5 py-2 rounded-lg text-[10px] md:text-xs font-bold font-mono text-slate-400 hover:text-white border border-slate-800 hover:border-slate-700 transition">
+                                AUTOROUTE
+                            </button>
+                            <button onclick="setGearMode('regen')" id="mode-gear-regen" class="gear-btn px-2.5 py-2 rounded-lg text-[10px] md:text-xs font-bold font-mono text-slate-400 hover:text-white border border-slate-800 hover:border-slate-700 transition">
+                                REGEN
+                            </button>
+                            <button onclick="setGearMode('reverse')" id="mode-gear-reverse" class="gear-btn px-2.5 py-2 rounded-lg text-[10px] md:text-xs font-bold font-mono text-slate-400 hover:text-white border border-slate-800 hover:border-slate-700 transition">
+                                RECULER
+                            </button>
+                        </div>
+
+                        <!-- Active Mode Info Screen -->
+                        <div class="bg-slate-950 p-4 rounded-xl border border-slate-850 mt-4 shadow-inner relative">
+                            <div class="absolute top-2 right-4 flex items-center gap-1.5">
+                                <span class="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-ping"></span>
+                                <span class="text-[9px] font-mono text-slate-500">KINETIC FEEDBACK</span>
+                            </div>
+                            <span class="text-xs text-cyan-400 font-extrabold uppercase tracking-wider block" id="gear-mode-title">Mode Actuel : Tout Électrique (Basses vitesses / Reculer)</span>
+                            <p class="text-[11px] text-slate-350 mt-1.5 leading-relaxed" id="gear-mode-desc">
+                                MG2 utilise l'énergie stockée dans la batterie HT pour propulser le véhicule. Le moteur thermique (MCI) reste éteint (vitesse nulle). Par conséquent, pour respecter l'équilibre cinématique, le moteur de contrôle MG1 tourne à haute vitesse dans le sens inverse.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Live Speeds Digital Indicators -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <!-- MG1 Indicator -->
+                        <div class="bg-slate-950/80 p-3 rounded-xl border border-slate-800/70 shadow-inner flex flex-col justify-between relative">
+                            <span class="text-[10px] font-bold text-amber-500 uppercase tracking-wide flex items-center gap-1.5">
+                                <span class="w-1.5 h-1.5 bg-amber-500 rounded-full"></span> SUN GEAR MG1
+                            </span>
+                            <div class="my-1.5">
+                                <div class="text-xl font-mono font-bold text-slate-100 tracking-tight" id="val-speed-mg1">-2500 tr/min</div>
+                                <div class="w-full bg-slate-900 h-1 rounded-full overflow-hidden mt-1">
+                                    <div id="bar-mg1" class="bg-amber-500 h-full transition-all duration-300" style="width: 50%"></div>
+                                </div>
+                            </div>
+                            <span class="text-[9px] text-slate-500 uppercase font-mono" id="role-mg1">Moteur / Contrôle</span>
+                        </div>
+
+                        <!-- ICE Indicator -->
+                        <div class="bg-slate-950/80 p-3 rounded-xl border border-slate-800/70 shadow-inner flex flex-col justify-between relative">
+                            <span class="text-[10px] font-bold text-emerald-400 uppercase tracking-wide flex items-center gap-1.5">
+                                <span class="w-1.5 h-1.5 bg-emerald-400 rounded-full"></span> PORTE-SAT. ICE
+                            </span>
+                            <div class="my-1.5">
+                                <div class="text-xl font-mono font-bold text-slate-100 tracking-tight" id="val-speed-mci">0 tr/min</div>
+                                <div class="w-full bg-slate-900 h-1 rounded-full overflow-hidden mt-1">
+                                    <div id="bar-mci" class="bg-emerald-400 h-full transition-all duration-300" style="width: 0%"></div>
+                                </div>
+                            </div>
+                            <span class="text-[9px] text-slate-500 uppercase font-mono" id="role-mci">À l'arrêt (Inactif)</span>
+                        </div>
+
+                        <!-- MG2 Indicator -->
+                        <div class="bg-slate-950/80 p-3 rounded-xl border border-slate-800/70 shadow-inner flex flex-col justify-between relative">
+                            <span class="text-[10px] font-bold text-cyan-400 uppercase tracking-wide flex items-center gap-1.5">
+                                <span class="w-1.5 h-1.5 bg-cyan-400 rounded-full"></span> RING MG2
+                            </span>
+                            <div class="my-1.5">
+                                <div class="text-xl font-mono font-bold text-slate-100 tracking-tight" id="val-speed-mg2">1200 tr/min</div>
+                                <div class="w-full bg-slate-900 h-1 rounded-full overflow-hidden mt-1">
+                                    <div id="bar-mg2" class="bg-cyan-400 h-full transition-all duration-300" style="width: 40%"></div>
+                                </div>
+                            </div>
+                            <span class="text-[9px] text-slate-500 uppercase font-mono" id="role-mg2">Traction (Mode Moteur)</span>
+                        </div>
+                    </div>
+
+                    <!-- Overrides Sliders (Manual Tuning) -->
+                    <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-850 space-y-3">
+                        <span class="text-[10px] font-mono uppercase text-slate-400 tracking-wider block font-bold"><i class="fa-solid fa-sliders text-cyan-400"></i> Mode Expert : Forcer les vitesses angulaires</span>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="space-y-1">
+                                <div class="flex justify-between text-[11px] font-mono">
+                                    <span class="text-cyan-400 font-bold">RING MG2 (Roues) :</span>
+                                    <span id="lbl-slide-mg2" class="text-slate-300">1200 tr/min</span>
+                                </div>
+                                <input type="range" id="slide-mg2" min="-1500" max="3500" value="1200" oninput="updateGearsFromSliders()" class="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer">
+                            </div>
+
+                            <div class="space-y-1">
+                                <div class="flex justify-between text-[11px] font-mono">
+                                    <span class="text-emerald-400 font-bold">PORTE-SAT. ICE (Thermique) :</span>
+                                    <span id="lbl-slide-mci" class="text-slate-300">0 tr/min</span>
+                                </div>
+                                <input type="range" id="slide-mci" min="0" max="4500" value="0" oninput="updateGearsFromSliders()" class="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- SUMMARY COMPARISON TABLE -->
+        <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800/80 shadow-md">
+            <h3 class="text-lg font-bold mb-4 text-white flex items-center gap-2">
+                <i class="fa-solid fa-table text-blue-400"></i> Tableau de Synthèse des Énergies (resume 01.docx & 02.docx)
+            </h3>
+            <div class="overflow-x-auto rounded-xl border border-slate-800">
+                <table class="w-full text-left text-xs text-slate-300">
+                    <thead class="bg-slate-950 text-slate-200 uppercase tracking-wider font-semibold border-b border-slate-800">
+                        <tr>
+                            <th class="p-3">Type</th>
+                            <th class="p-3">MCI (Thermique)</th>
+                            <th class="p-3">Recharge Externe</th>
+                            <th class="p-3">Mode 100% Élec</th>
+                            <th class="p-3">Spécificité Batterie</th>
+                            <th class="p-3">Émission CO2</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-800/80">
+                        <tr class="hover:bg-slate-950/40">
+                            <td class="p-3 font-bold text-white">MHEV</td>
+                            <td class="p-3 text-emerald-400"><i class="fa-solid fa-circle-check"></i> Oui</td>
+                            <td class="p-3 text-rose-400"><i class="fa-solid fa-circle-xmark"></i> Non</td>
+                            <td class="p-3 text-rose-400"><i class="fa-solid fa-circle-xmark"></i> Non</td>
+                            <td class="p-3">Petite Batterie 48V (DC)</td>
+                            <td class="p-3 text-amber-400">Réduite (Non-zéro)</td>
+                        </tr>
+                        <tr class="hover:bg-slate-950/40">
+                            <td class="p-3 font-bold text-white">HEV</td>
+                            <td class="p-3 text-emerald-400"><i class="fa-solid fa-circle-check"></i> Oui</td>
+                            <td class="p-3 text-rose-400"><i class="fa-solid fa-circle-xmark"></i> Non</td>
+                            <td class="p-3 text-yellow-400"><i class="fa-solid fa-circle-minus"></i> Oui (limité)</td>
+                            <td class="p-3">Haute Tension (~200V / 1-3 kWh)</td>
+                            <td class="p-3 text-amber-400">Réduite (Non-zéro)</td>
+                        </tr>
+                        <tr class="hover:bg-slate-950/40">
+                            <td class="p-3 font-bold text-white">PHEV</td>
+                            <td class="p-3 text-emerald-400"><i class="fa-solid fa-circle-check"></i> Oui</td>
+                            <td class="p-3 text-emerald-400"><i class="fa-solid fa-circle-check"></i> Oui (Principalement AC)</td>
+                            <td class="p-3 text-emerald-400"><i class="fa-solid fa-circle-check"></i> Oui</td>
+                            <td class="p-3">Haute Tension (~300V / 8-25 kWh)</td>
+                            <td class="p-3 text-emerald-500">Très faible moyenne</td>
+                        </tr>
+                        <tr class="hover:bg-slate-950/40">
+                            <td class="p-3 font-bold text-white">EV / BEV</td>
+                            <td class="p-3 text-rose-400"><i class="fa-solid fa-circle-xmark"></i> Non</td>
+                            <td class="p-3 text-emerald-400"><i class="fa-solid fa-circle-check"></i> Oui (AC et DC Rapide)</td>
+                            <td class="p-3 text-emerald-400"><i class="fa-solid fa-circle-check"></i> Oui (Exclusif)</td>
+                            <td class="p-3">Haute Tension (400-800V / 40-100 kWh)</td>
+                            <td class="p-3 text-emerald-400 font-bold"><i class="fa-solid fa-leaf"></i> 0-Émission (Échappement)</td>
+                        </tr>
+                        <tr class="hover:bg-slate-950/40">
+                            <td class="p-3 font-bold text-white">FCEV</td>
+                            <td class="p-3 text-rose-400"><i class="fa-solid fa-circle-xmark"></i> Non</td>
+                            <td class="p-3 text-rose-400"><i class="fa-solid fa-circle-xmark"></i> Non (H2 gazeux)</td>
+                            <td class="p-3 text-emerald-400"><i class="fa-solid fa-circle-check"></i> Oui (Exclusif)</td>
+                            <td class="p-3">Pile combustible + Petite Batterie Tampon</td>
+                            <td class="p-3 text-emerald-400 font-bold"><i class="fa-solid fa-leaf"></i> 0-Émission (Rejet H2O)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- TAB 4: ELECTRICITE & BATTERIES -->
+    <section id="content-electricite" class="tab-content hidden space-y-6">
+        
+        <!-- Electric fundamentals cards -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 font-sans">
+            <div class="bg-slate-900 p-4 rounded-2xl border border-slate-800 flex flex-col justify-between">
+                <div>
+                    <span class="text-xs font-bold uppercase text-amber-550 tracking-wider">Pression</span>
+                    <h4 class="text-base font-bold text-white mt-1">La Tension (U)</h4>
+                    <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+                        Grandeur mesurant la différence de potentiel entre deux points. C'est la force qui "pousse" les électrons pour les faire circuler.
+                    </p>
+                </div>
+                <div class="bg-slate-950 p-2 rounded border border-slate-800 mt-3 text-xs flex justify-between font-mono">
+                    <span>Unité : <strong class="text-amber-400">Volt (V)</strong></span>
+                </div>
+            </div>
+
+            <div class="bg-slate-900 p-4 rounded-2xl border border-slate-800 flex flex-col justify-between">
+                <div>
+                    <span class="text-xs font-bold uppercase text-emerald-400 tracking-wider">Débit</span>
+                    <h4 class="text-base font-bold text-white mt-1">L'Intensité (I)</h4>
+                    <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+                        Mesure le débit des charges électriques (électrons) traversant un conducteur par unité de temps. C'est le flux d'électricité.
+                    </p>
+                </div>
+                <div class="bg-slate-950 p-2 rounded border border-slate-800 mt-3 text-xs flex justify-between font-mono">
+                    <span>Unité : <strong class="text-emerald-400">Ampère (A)</strong></span>
+                </div>
+            </div>
+
+            <div class="bg-slate-900 p-4 rounded-2xl border border-slate-800 flex flex-col justify-between">
+                <div>
+                    <span class="text-xs font-bold uppercase text-rose-550 tracking-wider">Étranglement</span>
+                    <h4 class="text-base font-bold text-white mt-1">La Résistance (R)</h4>
+                    <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+                        Capacité physique d'un matériau à s'opposer de manière intrinsèque au passage des électrons.
+                    </p>
+                </div>
+                <div class="bg-slate-950 p-2 rounded border border-slate-800 mt-3 text-xs flex justify-between font-mono">
+                    <span>Unité : <strong class="text-rose-400">Ohm (Ω)</strong></span>
+                </div>
+            </div>
+
+            <div class="bg-slate-900 p-4 rounded-2xl border border-slate-800 flex flex-col justify-between">
+                <div>
+                    <span class="text-xs font-bold uppercase text-blue-400 tracking-wider">Capacité Réservoir</span>
+                    <h4 class="text-base font-bold text-white mt-1">La Capacité (Ah)</h4>
+                    <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+                        Indique combien d'Ampères la batterie peut délivrer de manière constante pendant une durée d'une heure avant d'être vide.
+                    </p>
+                </div>
+                <div class="bg-slate-950 p-2 rounded border border-slate-800 mt-3 text-xs flex justify-between font-mono">
+                    <span>Unité : <strong class="text-blue-400">Ampère-heure (Ah)</strong></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- OHM'S LAW AND HYDRAULIC ANALOGY SIMULATOR -->
+        <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 shadow-md">
+            <h3 class="text-lg font-bold text-white flex items-center gap-2 mb-2">
+                <i class="fa-solid fa-droplet text-blue-400"></i> Loi d'Ohm & Analogie Hydraulique Interactive (U = R &times; I)
+            </h3>
+            <p class="text-xs text-slate-400 mb-4">Ajustez la tension de poussée et l'étranglement (résistance) pour visualiser l'impact direct sur le débit du courant et les pertes thermiques par effet Joule.</p>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+                <!-- Inputs & Sliders -->
+                <div class="lg:col-span-4 bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-4 text-xs font-mono">
+                    <div class="space-y-1">
+                        <div class="flex justify-between font-bold text-amber-500">
+                            <span>Tension (U) :</span>
+                            <span id="lbl-ohm-u">12 V</span>
+                        </div>
+                        <input type="range" id="slide-ohm-u" min="1" max="48" value="12" oninput="updateOhmSimulator()" class="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer">
+                    </div>
+
+                    <div class="space-y-1">
+                        <div class="flex justify-between font-bold text-rose-450">
+                            <span>Résistance (R) :</span>
+                            <span id="lbl-ohm-r">2 Ω</span>
+                        </div>
+                        <input type="range" id="slide-ohm-r" min="0.5" max="10" step="0.5" value="2" oninput="updateOhmSimulator()" class="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer">
+                    </div>
+
+                    <div class="border-t border-slate-800 pt-3 space-y-2">
+                        <div class="flex justify-between text-xs">
+                            <span class="text-slate-400">Courant résultant :</span>
+                            <span class="font-bold text-emerald-400 text-sm" id="calc-ohm-i">6.00 A</span>
+                        </div>
+                        <div class="flex justify-between text-xs">
+                            <span class="text-slate-400">Puissance dissipée par effet Joule (R&middot;I²) :</span>
+                            <span class="font-bold text-red-400 text-sm" id="calc-ohm-pj">72.00 W</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live Animation of pipe / water current -->
+                <div class="lg:col-span-8 bg-slate-950 p-4 rounded-xl border border-slate-800 flex flex-col justify-center items-center">
+                    <canvas id="hydraulicCanvas" width="500" height="150" class="w-full max-h-[150px] bg-slate-900 rounded-lg border border-slate-800"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- AC vs DC LIVE OSCILLOSCOPE -->
+        <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 shadow-md">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-4">
+                <div>
+                    <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-wave-square text-indigo-400"></i> Différence entre Courant Continu (DC) & Alternatif (AC)
+                    </h3>
+                    <p class="text-xs text-slate-400">Visualisez les formes d'ondes sur cet oscilloscope interactif (Réf: resume 02.docx)</p>
+                </div>
+                <!-- Wave Switch -->
+                <div class="bg-slate-950 p-1 rounded-lg border border-slate-800 flex gap-1">
+                    <button onclick="switchWave('dc')" id="btn-wave-dc" class="px-3 py-1 text-xs font-bold rounded bg-blue-500 text-white">DC (Continu)</button>
+                    <button onclick="switchWave('ac')" id="btn-wave-ac" class="px-3 py-1 text-xs font-bold rounded text-slate-400 hover:text-white">AC (Alternatif)</button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+                <!-- Interactive waveform controls -->
+                <div class="lg:col-span-4 bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-4 text-xs font-mono">
+                    <div class="space-y-1">
+                        <div class="flex justify-between text-slate-300">
+                            <span>Amplitude (Tension max) :</span>
+                            <span id="lbl-osc-amp">12 V</span>
+                        </div>
+                        <input type="range" id="slide-osc-amp" min="1" max="24" value="12" oninput="updateOscilloscope()" class="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer">
+                    </div>
+
+                    <div id="freq-control" class="space-y-1 hidden">
+                        <div class="flex justify-between text-slate-300">
+                            <span>Fréquence (Hz) :</span>
+                            <span id="lbl-osc-freq">50 Hz</span>
+                        </div>
+                        <input type="range" id="slide-osc-freq" min="10" max="100" value="50" oninput="updateOscilloscope()" class="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer">
+                    </div>
+
+                    <div class="bg-slate-900 p-3 rounded border border-slate-800/60 leading-relaxed text-slate-400 text-[11px]" id="osc-desc">
+                        <strong class="text-blue-400 block mb-1">Caractéristiques du DC (Direct Current) :</strong>
+                        Les électrons circulent toujours dans un seul sens constant au cours du temps. Il a une polarité fixe (+ / -). <br>
+                        <strong>Exemples HEV/EV :</strong> La batterie haute tension, la batterie 12V d'accessoires.
+                    </div>
+                </div>
+
+                <!-- Waveform Canvas -->
+                <div class="lg:col-span-8 bg-slate-950 p-4 rounded-xl border border-slate-800 flex flex-col justify-center items-center">
+                    <canvas id="oscCanvas" width="500" height="150" class="w-full max-h-[150px] bg-slate-900 rounded-lg border border-slate-800"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- BATTERY ASSEMBLIES & PACK BUILDER -->
+        <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 shadow-md">
+            <h3 class="text-lg font-bold text-white flex items-center gap-2 mb-2">
+                <i class="fa-solid fa-cubes text-blue-400"></i> Assembleur de Modules de Batterie Interactif
+            </h3>
+            <p class="text-xs text-slate-400 mb-4">
+                Précautions d'assemblage (resume 01.docx) : Identité stricte requise, égalisation préalable de tension à 0,1V près, et sections de câble strictement identiques !
+            </p>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+                <!-- Assembly Selector and results -->
+                <div class="lg:col-span-4 bg-slate-950 p-5 rounded-xl border border-slate-800 flex flex-col justify-between text-xs space-y-4 font-mono">
+                    <div>
+                        <span class="text-xs text-slate-500 font-bold block mb-2 uppercase font-sans">Configuration de raccordement</span>
+                        <div class="grid grid-cols-2 gap-2 mb-4">
+                            <button onclick="setBatteryAssembly('series')" id="btn-batt-series" class="px-3 py-2 text-xs font-bold rounded-xl border border-blue-500 bg-blue-600 text-white shadow transition">
+                                <i class="fa-solid fa-circle-nodes"></i> En Série
+                            </button>
+                            <button onclick="setBatteryAssembly('parallel')" id="btn-batt-parallel" class="px-3 py-2 text-xs font-bold rounded-xl border border-slate-700 bg-slate-800 text-slate-300 hover:bg-slate-700 transition">
+                                <i class="fa-solid fa-grip-lines"></i> En Parallèle
+                            </button>
+                        </div>
+
+                        <div class="bg-slate-900 p-3.5 rounded-xl border border-slate-800 space-y-2 leading-relaxed text-slate-400 font-sans">
+                            <span class="text-slate-200 font-bold block" id="batt-assem-title">Raccordement en Série (S)</span>
+                            <p id="batt-assem-desc">
+                                On relie la borne positive (+) d'une cellule à la borne négative (-) de la suivante. <br>
+                                <strong class="text-emerald-400">Les tensions (V) s'additionnent</strong> mais la capacité globale (Ah) reste identique à celle d'une seule cellule.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 space-y-2 font-sans">
+                        <span class="text-[11px] text-slate-400 block uppercase font-bold font-mono">Sortie Totale du Pack (4 modules) :</span>
+                        <div class="flex justify-between text-sm">
+                            <span>Tension Totale :</span>
+                            <span class="font-extrabold text-amber-400 text-base font-mono" id="batt-result-v">48 V</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span>Capacité Totale :</span>
+                            <span class="font-extrabold text-blue-400 text-base font-mono" id="batt-result-ah">50 Ah</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Assembly Graphic Preview -->
+                <div class="lg:col-span-8 bg-slate-950 p-5 rounded-xl border border-slate-800 flex flex-col justify-center items-center">
+                    <span class="text-xs text-slate-500 font-bold mb-4 uppercase">Schéma de raccordement de 4 batteries</span>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 w-full max-w-xl" id="battery-grid-container">
+                        <!-- Battery Cells render dynamically -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- TAB 5: QUIZ & CERTIFICAT -->
+    <section id="content-quiz" class="tab-content hidden space-y-6">
+        
+        <!-- Welcome view to the quiz -->
+        <div id="quiz-start-view" class="bg-slate-900 p-6 rounded-2xl border border-slate-800 shadow-md text-center max-w-2xl mx-auto space-y-4">
+            <div class="w-16 h-16 bg-gradient-to-tr from-emerald-500 to-blue-500 rounded-full flex items-center justify-center mx-auto shadow">
+                <i class="fa-solid fa-graduation-cap text-white text-2xl"></i>
+            </div>
+            <h2 class="text-xl md:text-2xl font-bold text-white">Évaluation de Certification en Électromobilité</h2>
+            <p class="text-slate-300 text-sm leading-relaxed max-w-lg mx-auto">
+                Ce quiz évalue vos compétences techniques sur les technologies de véhicules MHEV, HEV, PHEV, BEV, FCEV et les architectures de transmission (Réf: resume 01.docx & 02.docx). <br>
+                <strong class="text-emerald-400">Obtenez un score de 80% minimum pour débloquer votre certificat de formation !</strong>
+            </p>
+            <button onclick="startQuiz()" class="px-6 py-2.5 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white font-extrabold rounded-xl hover:shadow-lg transition">
+                Démarrer le Test Technique
+            </button>
+        </div>
+
+        <!-- Active Question Card -->
+        <div id="quiz-card-view" class="hidden max-w-2xl mx-auto bg-slate-900 p-6 rounded-2xl border border-slate-800 shadow-md space-y-4">
+            <!-- Progress indicator -->
+            <div class="flex justify-between items-center text-xs text-slate-400">
+                <span id="quiz-progress-text">Question 1 sur 10</span>
+                <span class="font-bold text-emerald-400 font-mono" id="quiz-score-indicator">Score: 0/10</span>
+            </div>
+            <!-- Progress Bar -->
+            <div class="w-full bg-slate-950 h-1.5 rounded-full overflow-hidden">
+                <div id="quiz-progress-bar" class="bg-gradient-to-r from-emerald-400 to-blue-400 h-full" style="width: 10%"></div>
+            </div>
+
+            <!-- Question statement -->
+            <h3 class="text-base font-bold text-white leading-snug" id="quiz-question-text">
+                Pourquoi la transition vers le véhicule écoresponsable est-elle initiée ?
+            </h3>
+
+            <!-- Options buttons list -->
+            <div class="grid grid-cols-1 gap-2.5" id="quiz-options-container">
+                <!-- Options rendered dynamically -->
+            </div>
+
+            <!-- Explanation Feedback -->
+            <div id="quiz-explanation-box" class="hidden p-4 rounded-xl text-xs bg-slate-950 border border-slate-800">
+                <span class="font-bold block mb-1 text-emerald-400" id="quiz-explanation-status">Correct !</span>
+                <p class="text-slate-300 leading-relaxed font-sans" id="quiz-explanation-text">
+                    La raison écologique et la raison économique sont les deux causes majeures.
+                </p>
+            </div>
+
+            <!-- Footer navigation -->
+            <div class="flex justify-end pt-2">
+                <button onclick="nextQuizQuestion()" id="quiz-btn-next" class="hidden px-5 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-white text-xs font-bold shadow transition">
+                    Continuer <i class="fa-solid fa-chevron-right ml-1"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Quiz Results & Certificate view -->
+        <div id="quiz-results-view" class="hidden max-w-3xl mx-auto space-y-6">
+            
+            <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 text-center space-y-4">
+                <h2 class="text-2xl font-bold text-white">Résultats de l'Évaluation</h2>
+                <div class="flex justify-center items-center gap-4 py-4">
+                    <div class="w-24 h-24 rounded-full flex flex-col items-center justify-center border-4 border-slate-800 bg-slate-950">
+                        <span class="text-2xl font-black text-white" id="res-score-pct">70%</span>
+                        <span class="text-[9px] text-slate-500 uppercase font-bold font-mono">De réussite</span>
+                    </div>
+                </div>
+                <p class="text-sm text-slate-300 max-w-md mx-auto" id="res-score-message">
+                    Malheureusement, vous n'avez pas atteint le seuil de 80% requis pour obtenir votre certificat technique. Réétudiez le cours et tentez à nouveau !
+                </p>
+                <div class="flex justify-center gap-3">
+                    <button onclick="resetQuiz()" class="px-5 py-2 bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold rounded-xl transition">
+                        Recommencer le Quiz
+                    </button>
+                    <button onclick="downloadCertificate()" id="btn-cert-download" class="hidden px-5 py-2 bg-gradient-to-r from-emerald-500 to-blue-500 hover:shadow-lg text-white text-xs font-extrabold rounded-xl transition">
+                        Télécharger mon Certificat
+                    </button>
+                </div>
+            </div>
+
+            <!-- Certificate Mockup Visual -->
+            <div id="certificate-mockup" class="hidden bg-slate-950 border-8 border-slate-800 p-8 rounded-2xl relative shadow-2xl max-w-2xl mx-auto overflow-hidden text-center text-slate-200">
+                <div class="absolute -right-20 -top-20 opacity-5 text-emerald-500 text-[300px] pointer-events-none">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <!-- Certificate border inside -->
+                <div class="border border-emerald-500/20 p-6 rounded-lg">
+                    <span class="text-emerald-400 uppercase tracking-widest text-[10px] font-black font-mono">Certificat de Formation Technique</span>
+                    <h3 class="text-2xl font-serif font-bold text-white mt-2">ÉCORESPONSABILITÉ ET MOTORISATION ÉLECTRIFIÉE</h3>
+                    <p class="text-[11px] text-slate-400 mt-1">Délivré en vertu de la validation du programme d'Introduction aux Technologies des Véhicules Électrifiés</p>
+                    
+                    <div class="my-6">
+                        <span class="text-xs text-slate-500 block">Certifié à :</span>
+                        <span class="text-xl font-bold text-white border-b border-slate-850 px-6 py-1 inline-block">Apprenti Ingénieur / Technicien</span>
+                    </div>
+
+                    <p class="text-xs text-slate-300 max-w-md mx-auto">
+                        Pour avoir démontré des compétences approfondies sur la théorie, les architectures électriques (MHEV, HEV, PHEV, BEV, FCEV), et le fonctionnement cinématique d'un train épicycloïdal.
+                    </p>
+
+                    <div class="flex justify-between items-end mt-10 text-xs text-slate-500">
+                        <div class="text-left font-mono">
+                            <span class="block text-slate-400 font-bold font-sans">ÉLECTROMOBILITÉ EXPERT</span>
+                            <span class="text-[9px]">Auteurs du cours (resume 01 & 02)</span>
+                        </div>
+                        <div class="text-right font-mono">
+                            <span class="block text-slate-400 font-bold font-sans">Score obtenu : <strong class="text-emerald-400" id="cert-score">90%</strong></span>
+                            <span class="text-[9px]">ID d'origine : CERT-BEV-<span id="cert-rand-id">8273</span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="bg-slate-950 border-t border-slate-900 px-4 py-4 text-center text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 font-mono">
+        <span>&copy; 2026 Électromobilité Expert Portal. Tous droits réservés.</span>
+        <div class="flex gap-4">
+            <span class="hover:text-white transition">Réf: resume 01.docx</span>
+            <span class="hover:text-white transition">Réf: resume 02.docx</span>
+        </div>
+    </div>
+</footer>
+
+<!-- SYSTEM JAVASCRIPT LOGIC -->
+<script>
+    // Global Tab Manager
+    function switchTab(tabId) {
+        document.querySelectorAll('.tab-content').forEach(tab => {
+            tab.classList.add('hidden');
+            tab.classList.remove('block');
+        });
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.classList.remove('bg-emerald-500', 'text-white', 'shadow-md');
+            btn.classList.add('text-slate-400', 'hover:text-white');
+        });
+
+        const targetTab = document.getElementById(`content-${tabId}`);
+        if(targetTab) {
+            targetTab.classList.remove('hidden');
+            targetTab.classList.add('block');
+        }
+        const targetBtn = document.getElementById(`tab-${tabId}`);
+        if(targetBtn) {
+            targetBtn.classList.add('bg-emerald-500', 'text-white', 'shadow-md');
+            targetBtn.classList.remove('text-slate-400', 'hover:text-white');
+        }
+
+        setTimeout(() => {
+            window.dispatchEvent(new Event('resize'));
+        }, 50);
+    }
+
+    // Tab 2: Family detailed cards switcher
+    function showFamily(familyId) {
+        document.querySelectorAll('.fam-card').forEach(card => {
+            card.classList.add('hidden');
+            card.classList.remove('block');
+        });
+        document.querySelectorAll('.fam-btn').forEach(btn => {
+            btn.classList.remove('bg-blue-600', 'text-white', 'border-blue-500');
+            btn.classList.add('bg-slate-800', 'text-slate-300', 'border-slate-700', 'hover:bg-slate-700');
+        });
+
+        const targetCard = document.getElementById(`card-${familyId}`);
+        if(targetCard) {
+            targetCard.classList.remove('hidden');
+            targetCard.classList.add('block');
+        }
+        const targetBtn = document.getElementById(`btn-fam-${familyId}`);
+        if(targetBtn) {
+            targetBtn.classList.add('bg-blue-600', 'text-white', 'border-blue-500');
+            targetBtn.classList.remove('bg-slate-800', 'text-slate-300', 'border-slate-700', 'hover:bg-slate-700');
+        }
+    }
+
+    // PLANETARY GEAR SIMULATOR PHYSICS AND CANVAS RENDERING
+    const canvasPlanetary = document.getElementById('planetaryCanvas');
+    const ctxPlanetary = canvasPlanetary.getContext('2d');
+
+    // Gear physics parameters
+    let sunSpeed = -2500;   // MG1 Speed
+    let carrierSpeed = 0;   // ICE Speed
+    let ringSpeed = 1200;   // MG2 Speed
+
+    // Rotation angles accumulated over time for visual rotation rendering
+    let angleSun = 0;
+    let angleCarrier = 0;
+    let angleRing = 0;
+
+    // Fixed planetary teeth ratios
+    // (1 + k) * Carrier = k * Ring + Sun => let k = 2.6
+    const k_ratio = 2.6;
+
+    // Simulation presets according to real driving phases (resume 02.docx)
+    const gearPresets = {
+        ev: { 
+            mci: 0, 
+            ring: 1200, 
+            title: "Mode Électrique Pur (Basse Vitesse / EV Mode)", 
+            desc: "MG2 tourne en avant (vitesse positive) en utilisant l’énergie stockée dans la batterie haute tension pour propulser le véhicule. Le moteur thermique (ICE) reste fixe (à l'arrêt). Par conséquent, pour assurer l’équilibre cinématique, MG1 (Solaire) tourne dans le sens inverse (vitesse de rotation négative) sans générer d’énergie.",
+            roleMg1: "Libre (Rotation inverse)",
+            roleMci: "À l'arrêt",
+            roleMg2: "Traction (Moteur Principal)"
+        },
+        low: { 
+            mci: 800, 
+            ring: 1000, 
+            title: "Démarrage du Moteur Thermique (ICE)", 
+            desc: "MG2 continue d'épuiser l'énergie de la batterie pour faire avancer le véhicule. Mais l'ordinateur de contrôle commande MG1 en marche arrière (vitesse négative) puis réduit progressivement sa vitesse. Cela perturbe l'équilibre cinématique, ce qui entraîne et démarre instantanément le moteur thermique (ICE).",
+            roleMg1: "Démarreur (Contrôle couple)",
+            roleMci: "Lancement / Allumage",
+            roleMg2: "Traction assistée"
+        },
+        cruise: { 
+            mci: 2000, 
+            ring: 2200, 
+            title: "Circulation à Grande Vitesse (Autoroute)", 
+            desc: "Le système répartit la puissance mécanique du moteur thermique (ICE/MCI) : une partie va directement entraîner mécaniquement les roues (Couronne positive), et l'autre partie entraîne MG1 (Générateur) qui produit de l'électricité haute tension pour alimenter MG2 ou recharger la batterie. Ici, MG1 et MG2 tournent tous deux en avant (vitesse positive).",
+            roleMg1: "Générateur Actif (Charge)",
+            roleMci: "Propulsion Principale",
+            roleMg2: "Moteur d'assistance"
+        },
+        regen: { 
+            mci: 600, 
+            ring: 1400, 
+            title: "Freinage Régénératif (Récupération)", 
+            desc: "Le moteur thermique est coupé ou au ralenti bas pour réduire les pertes. MG1 tourne en sens inverse sans générer de courant pour abaisser le régime thermique. Les roues entraînent MG2 qui bascule instantanément en mode alternateur/générateur pour freiner le véhicule et recharger le pack de batteries HT.",
+            roleMg1: "Régulation cinématique",
+            roleMci: "Ralenti bas / Coupé",
+            roleMg2: "Générateur (Récupération)"
+        },
+        reverse: { 
+            mci: 0, 
+            ring: -600, 
+            title: "Marche Arrière Purement Électrique", 
+            desc: "Le moteur électrique principal MG2 est alimenté en phases inversées et tourne en sens inverse (vitesse négative) pour faire reculer le véhicule. Le moteur thermique est coupé (ICE = 0). Le moteur de contrôle MG1 tourne alors à haute vitesse positive pour neutraliser tout mouvement mécanique vers le bloc thermique.",
+            roleMg1: "Neutre cinématique",
+            roleMci: "À l'arrêt",
+            roleMg2: "Inversion de phase (Moteur)"
+        }
+    };
+
+    function setGearMode(presetKey) {
+        document.querySelectorAll('.gear-btn').forEach(btn => {
+            btn.classList.remove('bg-emerald-500', 'text-white', 'shadow-hud-glow-emerald', 'border-emerald-500');
+            btn.classList.add('text-slate-400', 'hover:text-white', 'border-slate-800');
+        });
+        const activeBtn = document.getElementById(`mode-gear-${presetKey}`);
+        if(activeBtn) {
+            activeBtn.classList.add('bg-emerald-500', 'text-white', 'shadow-hud-glow-emerald', 'border-emerald-500');
+            activeBtn.classList.remove('text-slate-400', 'hover:text-white', 'border-slate-800');
+        }
+
+        const preset = gearPresets[presetKey];
+        document.getElementById('slide-mci').value = preset.mci;
+        document.getElementById('slide-mg2').value = preset.ring;
+
+        updateGearsFromSliders(preset.title, preset.desc, preset.roleMg1, preset.roleMci, preset.roleMg2);
+    }
+
+    function updateGearsFromSliders(titleOverride = null, descOverride = null, r1 = null, r2 = null, r3 = null) {
+        carrierSpeed = parseFloat(document.getElementById('slide-mci').value);
+        ringSpeed = parseFloat(document.getElementById('slide-mg2').value);
+
+        // Sun = (1 + k)*Carrier - k*Ring
+        sunSpeed = Math.round((1 + k_ratio) * carrierSpeed - k_ratio * ringSpeed);
+
+        // Update indicators
+        document.getElementById('val-speed-mci').innerText = `${carrierSpeed} tr/min`;
+        document.getElementById('val-speed-mg2').innerText = `${ringSpeed} tr/min`;
+        document.getElementById('val-speed-mg1').innerText = `${sunSpeed} tr/min`;
+
+        // Update horizontal progress bars
+        document.getElementById('bar-mci').style.width = `${Math.min(100, (carrierSpeed / 4500) * 100)}%`;
+        document.getElementById('bar-mg2').style.width = `${Math.min(100, (Math.abs(ringSpeed) / 3500) * 100)}%`;
+        document.getElementById('bar-mg1').style.width = `${Math.min(100, (Math.abs(sunSpeed) / 6000) * 100)}%`;
+
+        // Update roles text if provided
+        if (r1) document.getElementById('role-mg1').innerText = r1;
+        if (r2) document.getElementById('role-mci').innerText = r2;
+        if (r3) document.getElementById('role-mg2').innerText = r3;
+
+        if (r1 === null) {
+            // Manual sliders override
+            document.getElementById('role-mg1').innerText = sunSpeed < 0 ? "Générateur / Contrôle inverse" : "Générateur de contrôle";
+            document.getElementById('role-mci').innerText = carrierSpeed === 0 ? "À l'arrêt" : "Thermique actif";
+            document.getElementById('role-mg2').innerText = ringSpeed < 0 ? "Marche arrière élec." : "Propulsion mécanique / AC";
+        }
+
+        document.getElementById('lbl-slide-mci').innerText = `${carrierSpeed} tr/min`;
+        document.getElementById('lbl-slide-mg2').innerText = `${ringSpeed} tr/min`;
+
+        if(titleOverride && descOverride) {
+            document.getElementById('gear-mode-title').innerText = titleOverride;
+            document.getElementById('gear-mode-desc').innerText = descOverride;
+        } else {
+            document.getElementById('gear-mode-title').innerText = "Mode Expert Manuel Activé";
+            document.getElementById('gear-mode-desc').innerText = "Ajustement cinématique libre des régimes. Observez la vitesse de synchronisation de MG1 imposée mécaniquement par la loi des trains épicycloïdaux (Formule Willis).";
+        }
+    }
+
+    // DRAW GEAR HELPER WITH HIGH VISUAL GLOW AND REALISTIC SHAPE
+    function drawDetailedGear(cx, cy, innerRadius, outerRadius, numTeeth, rotationAngle, strokeColor, glowColor, fillStyle = null, internal = false) {
+        ctxPlanetary.save();
+        ctxPlanetary.translate(cx, cy);
+        ctxPlanetary.rotate(rotationAngle);
+        
+        ctxPlanetary.shadowBlur = 10;
+        ctxPlanetary.shadowColor = glowColor;
+        ctxPlanetary.strokeStyle = strokeColor;
+        ctxPlanetary.lineWidth = 2;
+        
+        ctxPlanetary.beginPath();
+        
+        const midRadius = (innerRadius + outerRadius) / 2;
+
+        for (let i = 0; i < numTeeth; i++) {
+            const angle = (i * 2 * Math.PI) / numTeeth;
+            const nextAngle = ((i + 0.5) * 2 * Math.PI) / numTeeth;
+            const thirdAngle = ((i + 1) * 2 * Math.PI) / numTeeth;
+
+            if (!internal) {
+                // External gear teeth shape (Sun & Planets)
+                ctxPlanetary.lineTo(Math.cos(angle) * innerRadius, Math.sin(angle) * innerRadius);
+                ctxPlanetary.lineTo(Math.cos(angle) * outerRadius, Math.sin(angle) * outerRadius);
+                ctxPlanetary.lineTo(Math.cos(nextAngle) * outerRadius, Math.sin(nextAngle) * outerRadius);
+                ctxPlanetary.lineTo(Math.cos(nextAngle) * innerRadius, Math.sin(nextAngle) * innerRadius);
+            } else {
+                // Internal gear teeth shape (Ring Gear)
+                ctxPlanetary.lineTo(Math.cos(angle) * outerRadius, Math.sin(angle) * outerRadius);
+                ctxPlanetary.lineTo(Math.cos(angle) * innerRadius, Math.sin(angle) * innerRadius);
+                ctxPlanetary.lineTo(Math.cos(nextAngle) * innerRadius, Math.sin(nextAngle) * innerRadius);
+                ctxPlanetary.lineTo(Math.cos(nextAngle) * outerRadius, Math.sin(nextAngle) * outerRadius);
+            }
+        }
+        ctxPlanetary.closePath();
+        ctxPlanetary.stroke();
+        
+        if (fillStyle) {
+            ctxPlanetary.shadowBlur = 0;
+            ctxPlanetary.fillStyle = fillStyle;
+            ctxPlanetary.fill();
+        }
+        
+        ctxPlanetary.restore();
+    }
+
+    // MAIN PSD RENDERING FRAME
+    function renderPlanetaryFrame() {
+        ctxPlanetary.clearRect(0, 0, canvasPlanetary.width, canvasPlanetary.height);
+        
+        const cx = canvasPlanetary.width / 2;
+        const cy = canvasPlanetary.height / 2;
+
+        const radiusSun = 34;
+        const radiusPlanet = 22;
+        const radiusRingInner = 78;
+        const orbitRadius = radiusSun + radiusPlanet;
+
+        // Scale rotations
+        const speedMultiplier = 0.0001;
+        angleSun += sunSpeed * speedMultiplier;
+        angleCarrier += carrierSpeed * speedMultiplier;
+        angleRing += ringSpeed * speedMultiplier;
+
+        // Setup high-tech background circle
+        ctxPlanetary.save();
+        ctxPlanetary.strokeStyle = "rgba(51, 65, 85, 0.15)";
+        ctxPlanetary.lineWidth = 1;
+        ctxPlanetary.beginPath();
+        ctxPlanetary.arc(cx, cy, radiusRingInner + 22, 0, 2*Math.PI);
+        ctxPlanetary.stroke();
+        ctxPlanetary.restore();
+
+        // 1. DRAW RING GEAR (COURONNE - MG2 & ROUES)
+        // Draw real mechanical teeth inside
+        drawDetailedGear(cx, cy, radiusRingInner - 8, radiusRingInner, 32, angleRing, '#06b6d4', 'rgba(6, 182, 212, 0.4)', 'rgba(6, 182, 212, 0.02)', true);
+        
+        // Solid outer ring for the RING MG2 casing
+        ctxPlanetary.save();
+        ctxPlanetary.strokeStyle = "#0891b2";
+        ctxPlanetary.shadowBlur = 12;
+        ctxPlanetary.shadowColor = "rgba(6, 182, 212, 0.5)";
+        ctxPlanetary.lineWidth = 4;
+        ctxPlanetary.beginPath();
+        ctxPlanetary.arc(cx, cy, radiusRingInner + 4, 0, 2 * Math.PI);
+        ctxPlanetary.stroke();
+        
+        // Dynamic power flow indicators on Ring (Flow circles if moving)
+        if (Math.abs(ringSpeed) > 10) {
+            ctxPlanetary.strokeStyle = "#22d3ee";
+            ctxPlanetary.lineWidth = 2;
+            ctxPlanetary.beginPath();
+            ctxPlanetary.arc(cx, cy, radiusRingInner + 4, angleRing * 1.5, angleRing * 1.5 + (Math.PI / 4));
+            ctxPlanetary.stroke();
+        }
+        ctxPlanetary.restore();
+
+        // Label Ring Gear (Outer bounds)
+        ctxPlanetary.font = "bold 8px 'JetBrains Mono'";
+        ctxPlanetary.fillStyle = "#06b6d4";
+        ctxPlanetary.fillText("RING MG2 & ROUES", cx - 44, cy - radiusRingInner - 12);
+
+        // 2. DRAW SUN GEAR (SOLAIRE - MG1)
+        drawDetailedGear(cx, cy, radiusSun - 8, radiusSun, 14, angleSun, '#f59e0b', 'rgba(245, 158, 11, 0.3)', 'rgba(245, 158, 11, 0.05)', false);
+        
+        // Inner sun hub
+        ctxPlanetary.save();
+        ctxPlanetary.beginPath();
+        ctxPlanetary.fillStyle = "#d97706";
+        ctxPlanetary.arc(cx, cy, 6, 0, 2*Math.PI);
+        ctxPlanetary.fill();
+        ctxPlanetary.restore();
+        
+        ctxPlanetary.fillStyle = "#f59e0b";
+        ctxPlanetary.fillText("SUN MG1", cx - 18, cy + radiusSun + 10);
+
+        // 3. DRAW PORTE-SATELLITES (CARRIER - ICE)
+        // Dynamic carrier structure
+        ctxPlanetary.save();
+        ctxPlanetary.translate(cx, cy);
+        ctxPlanetary.rotate(angleCarrier);
+        
+        // Outer carrier ring linking planets
+        ctxPlanetary.beginPath();
+        ctxPlanetary.strokeStyle = "rgba(16, 185, 129, 0.8)";
+        ctxPlanetary.lineWidth = 5;
+        ctxPlanetary.shadowBlur = 8;
+        ctxPlanetary.shadowColor = "rgba(16, 185, 129, 0.4)";
+        ctxPlanetary.arc(0, 0, orbitRadius, 0, 2 * Math.PI);
+        ctxPlanetary.stroke();
+
+        // 4 robust mechanical spider arms to hold 4 planet gears
+        ctxPlanetary.beginPath();
+        ctxPlanetary.strokeStyle = "rgba(16, 185, 129, 0.5)";
+        ctxPlanetary.lineWidth = 8;
+        ctxPlanetary.moveTo(-orbitRadius, 0); ctxPlanetary.lineTo(orbitRadius, 0);
+        ctxPlanetary.moveTo(0, -orbitRadius); ctxPlanetary.lineTo(0, orbitRadius);
+        ctxPlanetary.stroke();
+
+        // Draw mechanical axes pins
+        ctxPlanetary.fillStyle = "#10b981";
+        for (let i = 0; i < 4; i++) {
+            const anglePin = i * Math.PI / 2;
+            ctxPlanetary.beginPath();
+            ctxPlanetary.arc(Math.cos(anglePin)*orbitRadius, Math.sin(anglePin)*orbitRadius, 5, 0, 2*Math.PI);
+            ctxPlanetary.fill();
+        }
+        ctxPlanetary.restore();
+
+        // 4. DRAW THE 4 SATELLITES (PLANET GEARS)
+        const numPlanets = 4;
+        for (let i = 0; i < numPlanets; i++) {
+            const planetAngleOnCarrier = (i * Math.PI / 2) + angleCarrier;
+            const px = cx + Math.cos(planetAngleOnCarrier) * orbitRadius;
+            const py = cy + Math.sin(planetAngleOnCarrier) * orbitRadius;
+
+            // Planet gear self rotation calculation: depends on carrier and sun relative rolling speeds
+            const planetSelfRotation = angleCarrier * (1 + radiusSun / radiusPlanet) - angleSun * (radiusSun / radiusPlanet);
+            drawDetailedGear(px, py, radiusPlanet - 6, radiusPlanet, 10, planetSelfRotation, '#10b981', 'rgba(16, 185, 129, 0.3)', '#070a13', false);
+        }
+
+        // Label ICE (Carrier)
+        ctxPlanetary.fillStyle = "#10b981";
+        ctxPlanetary.fillText("PORTE-SATELLITES ICE", cx - 52, cy - 8);
+
+        requestAnimationFrame(renderPlanetaryFrame);
+    }
+
+    // HYDRAULIC ANALOGY AND OHM'S LAW ANIMATION
+    const canvasHydraulic = document.getElementById('hydraulicCanvas');
+    const ctxHydraulic = canvasHydraulic.getContext('2d');
+
+    let ohm_U = 12;
+    let ohm_R = 2;
+    let ohm_I = 6;
+
+    const flowBubbles = [];
+    for(let i = 0; i < 40; i++) {
+        flowBubbles.push({
+            x: Math.random() * 500,
+            y: 40 + Math.random() * 70
+        });
+    }
+
+    function updateOhmSimulator() {
+        ohm_U = parseFloat(document.getElementById('slide-ohm-u').value);
+        ohm_R = parseFloat(document.getElementById('slide-ohm-r').value);
+
+        ohm_I = ohm_U / ohm_R;
+        const pj = ohm_R * Math.pow(ohm_I, 2);
+
+        document.getElementById('lbl-ohm-u').innerText = `${ohm_U} V`;
+        document.getElementById('lbl-ohm-r').innerText = `${ohm_R} Ω`;
+        document.getElementById('calc-ohm-i').innerText = `${ohm_I.toFixed(2)} A`;
+        document.getElementById('calc-ohm-pj').innerText = `${pj.toFixed(2)} W`;
+    }
+
+    function renderHydraulicFrame() {
+        ctxHydraulic.clearRect(0, 0, canvasHydraulic.width, canvasHydraulic.height);
+
+        const w = canvasHydraulic.width;
+        const h = canvasHydraulic.height;
+
+        ctxHydraulic.beginPath();
+        ctxHydraulic.strokeStyle = '#475569';
+        ctxHydraulic.lineWidth = 4;
+        ctxHydraulic.fillStyle = 'rgba(30, 41, 59, 0.4)';
+
+        ctxHydraulic.moveTo(0, 30);
+        ctxHydraulic.lineTo(180, 30);
+        const pinchDepth = Math.max(0, (ohm_R - 0.5) * 6);
+        ctxHydraulic.quadraticCurveTo(250, 30 + pinchDepth, 320, 30);
+        ctxHydraulic.lineTo(w, 30);
+
+        ctxHydraulic.lineTo(w, 120);
+        ctxHydraulic.lineTo(320, 120);
+        ctxHydraulic.quadraticCurveTo(250, 120 - pinchDepth, 180, 120);
+        ctxHydraulic.lineTo(0, 120);
+        ctxHydraulic.closePath();
+        ctxHydraulic.fill();
+        ctxHydraulic.stroke();
+
+        ctxHydraulic.fillStyle = '#F59E0B';
+        const pistonX = 25 + Math.sin(Date.now() * 0.005) * (ohm_U * 0.5);
+        ctxHydraulic.fillRect(pistonX, 35, 8, 80);
+        ctxHydraulic.font = "bold 9px sans-serif";
+        ctxHydraulic.fillText("PRESSION (U)", pistonX - 10, 25);
+
+        const flowSpeed = ohm_I * 0.7;
+        
+        ctxHydraulic.fillStyle = '#38BDF8';
+        flowBubbles.forEach(b => {
+            b.x += flowSpeed;
+            if(b.x > w) {
+                b.x = 0;
+                b.y = 40 + Math.random() * 70;
+            }
+
+            if(b.x > 180 && b.x < 320) {
+                const centerDist = Math.abs(250 - b.x);
+                const normDist = 1 - (centerDist / 70);
+                const range = (80 - pinchDepth * 2) / 2;
+                b.y = 75 + (Math.sin(b.x) * range * normDist) + (Math.cos(b.x) * (1-normDist) * 35);
+            }
+
+            if (b.x > 220 && b.x < 280 && ohm_R > 4) {
+                ctxHydraulic.fillStyle = '#EF4444';
+            } else {
+                ctxHydraulic.fillStyle = '#38BDF8';
+            }
+
+            ctxHydraulic.beginPath();
+            ctxHydraulic.arc(b.x, b.y, 3, 0, 2 * Math.PI);
+            ctxHydraulic.fill();
+        });
+
+        ctxHydraulic.fillStyle = '#EF4444';
+        ctxHydraulic.fillText("RÉSISTANCE (R)", 210, 140);
+        
+        requestAnimationFrame(renderHydraulicFrame);
+    }
+
+    // OSCILLOSCOPE WAVEFORM VISUALIZATION
+    const canvasOsc = document.getElementById('oscCanvas');
+    const ctxOsc = canvasOsc.getContext('2d');
+
+    let waveMode = 'dc';
+    let waveAmplitude = 12;
+    let waveFrequency = 50;
+    let waveOffsetTime = 0;
+
+    function switchWave(mode) {
+        waveMode = mode;
+        document.getElementById('btn-wave-dc').className = mode === 'dc' ? "px-3 py-1 text-xs font-bold rounded bg-blue-500 text-white" : "px-3 py-1 text-xs font-bold rounded text-slate-400 hover:text-white";
+        document.getElementById('btn-wave-ac').className = mode === 'ac' ? "px-3 py-1 text-xs font-bold rounded bg-blue-500 text-white" : "px-3 py-1 text-xs font-bold rounded text-slate-400 hover:text-white";
+
+        const freqCtrl = document.getElementById('freq-control');
+        const descBox = document.getElementById('osc-desc');
+
+        if(mode === 'ac') {
+            freqCtrl.classList.remove('hidden');
+            descBox.innerHTML = `
+                <strong class="text-amber-400 block mb-1">Caractéristiques de l'AC (Alternating Current) :</strong>
+                Les électrons font des mouvements de va-et-vient (cycles) alternés réguliers. Pas de polarité fixe (+ / -). <br>
+                <strong>Exemples HEV/EV :</strong> Les courants triphasés circulant entre l'onduleur et les moteurs de traction (MG1/MG2), la prise de recharge secteur extérieure.
+            `;
+        } else {
+            freqCtrl.classList.add('hidden');
+            descBox.innerHTML = `
+                <strong class="text-blue-400 block mb-1">Caractéristiques du DC (Direct Current) :</strong>
+                Les électrons circulent toujours dans un seul sens constant au cours du temps. Il a une polarité fixe (+ / -). <br>
+                <strong>Exemples HEV/EV :</strong> La batterie haute tension, la batterie 12V d'accessoires.
+            `;
+        }
+    }
+
+    function updateOscilloscope() {
+        waveAmplitude = parseFloat(document.getElementById('slide-osc-amp').value);
+        waveFrequency = parseFloat(document.getElementById('slide-osc-freq').value);
+
+        document.getElementById('lbl-osc-amp').innerText = `${waveAmplitude} V`;
+        document.getElementById('lbl-osc-freq').innerText = `${waveFrequency} Hz`;
+    }
+
+    function renderOscilloscopeFrame() {
+        ctxOsc.clearRect(0, 0, canvasOsc.width, canvasOsc.height);
+
+        const w = canvasOsc.width;
+        const h = canvasOsc.height;
+        const cy = h / 2;
+
+        ctxOsc.strokeStyle = 'rgba(71, 85, 105, 0.2)';
+        ctxOsc.lineWidth = 1;
+        
+        for(let x = 0; x < w; x += 40) {
+            ctxOsc.beginPath();
+            ctxOsc.moveTo(x, 0); ctxOsc.lineTo(x, h);
+            ctxOsc.stroke();
+        }
+        for(let y = 0; y < h; y += 30) {
+            ctxOsc.beginPath();
+            ctxOsc.moveTo(0, y); ctxOsc.lineTo(w, y);
+            ctxOsc.stroke();
+        }
+
+        ctxOsc.strokeStyle = 'rgba(148, 163, 184, 0.5)';
+        ctxOsc.beginPath();
+        ctxOsc.moveTo(0, cy); ctxOsc.lineTo(w, cy);
+        ctxOsc.stroke();
+
+        ctxOsc.beginPath();
+        ctxOsc.lineWidth = 3;
+
+        waveOffsetTime += 0.05;
+
+        if(waveMode === 'dc') {
+            ctxOsc.strokeStyle = '#3B82F6';
+            const lineY = cy - (waveAmplitude * 2.5);
+            ctxOsc.moveTo(0, lineY);
+            ctxOsc.lineTo(w, lineY);
+        } else {
+            ctxOsc.strokeStyle = '#F59E0B';
+            ctxOsc.moveTo(0, cy);
+            for(let x = 0; x < w; x++) {
+                const frequencyScale = waveFrequency * 0.0005;
+                const waveY = cy - Math.sin((x * frequencyScale) - waveOffsetTime) * (waveAmplitude * 2.5);
+                ctxOsc.lineTo(x, waveY);
+            }
+        }
+        ctxOsc.stroke();
+
+        ctxOsc.fillStyle = '#94A3B8';
+        ctxOsc.font = '9px monospace';
+        ctxOsc.fillText(`SCALE: 5V/DIV | TIME: 2ms/DIV`, 10, h - 10);
+
+        requestAnimationFrame(renderOscilloscopeFrame);
+    }
+
+    // BATTERY PACK ASSEMBLER
+    let battAssemblyStyle = 'series';
+
+    function setBatteryAssembly(style) {
+        battAssemblyStyle = style;
+        
+        document.getElementById('btn-batt-series').className = style === 'series' ? "px-3 py-2 text-xs font-bold rounded-xl border border-blue-500 bg-blue-600 text-white shadow transition" : "px-3 py-2 text-xs font-bold rounded-xl border border-slate-700 bg-slate-800 text-slate-300 hover:bg-slate-700 transition";
+        document.getElementById('btn-batt-parallel').className = style === 'parallel' ? "px-3 py-2 text-xs font-bold rounded-xl border border-blue-500 bg-blue-600 text-white shadow transition" : "px-3 py-2 text-xs font-bold rounded-xl border border-slate-700 bg-slate-800 text-slate-300 hover:bg-slate-700 transition";
+
+        const titleBox = document.getElementById('batt-assem-title');
+        const descBox = document.getElementById('batt-assem-desc');
+
+        if(style === 'series') {
+            titleBox.innerText = "Raccordement en Série (S)";
+            descBox.innerHTML = `
+                On relie la borne positive (+) de chaque batterie à la borne négative (-) de la batterie qui la suit. <br>
+                <strong class="text-amber-400">Les tensions s'additionnent :</strong> V<sub>total</sub> = 12V + 12V + 12V + 12V = 48V. La capacité de stockage globale reste celle d'un seul module, soit 50 Ah.
+            `;
+            document.getElementById('batt-result-v').innerText = "48 V";
+            document.getElementById('batt-result-ah').innerText = "50 Ah";
+        } else {
+            titleBox.innerText = "Raccordement en Parallèle (P)";
+            descBox.innerHTML = `
+                On raccorde ensemble toutes les bornes positives (+) entre elles et toutes les bornes négatives (-) entre elles. <br>
+                <strong class="text-blue-400">Les capacités s'additionnent :</strong> Ah<sub>total</sub> = 50Ah + 50Ah + 50Ah + 50Ah = 200 Ah. La tension globale reste égale à celle d'un seul module, soit 12 V.
+            `;
+            document.getElementById('batt-result-v').innerText = "12 V";
+            document.getElementById('batt-result-ah').innerText = "200 Ah";
+        }
+
+        renderBatteryBlocks();
+    }
+
+    function renderBatteryBlocks() {
+        const container = document.getElementById('battery-grid-container');
+        container.innerHTML = "";
+
+        for(let i = 1; i <= 4; i++) {
+            const cell = document.createElement('div');
+            cell.className = "bg-slate-900 border border-slate-850 p-3 rounded-xl relative flex flex-col justify-between items-center text-center shadow-inner h-28";
+            
+            cell.innerHTML = `
+                <div class="flex justify-between w-full text-[10px] font-bold font-mono">
+                    <span class="text-red-500" id="pole-pos-${i}">+</span>
+                    <span class="text-slate-500" id="pole-neg-${i}">-</span>
+                </div>
+                <div class="my-2 text-center">
+                    <i class="fa-solid fa-car-battery text-blue-500 text-xl"></i>
+                    <span class="block font-black text-xs text-white mt-1">12V</span>
+                    <span class="block text-[9px] text-slate-400 font-mono">50 Ah</span>
+                </div>
+                <span class="text-[9px] text-slate-500 font-bold uppercase font-mono">Bloc ${i}</span>
+            `;
+
+            container.appendChild(cell);
+        }
+    }
+
+    // EDUCATIONAL EVALUATION QUIZ (10 questions technical program resume 01 & 02)
+    const quizQuestions = [
+        {
+            q: "Quelles sont les deux raisons fondamentales à l'origine de la transition vers les véhicules écoresponsables ?",
+            o: [
+                "Une raison esthétique et une raison de confort de suspension",
+                "Une raison écologique (réchauffement de l'atmosphère) et économique (efficacité, coûts réduits)",
+                "Exclusivement la réduction du bruit de roulage urbain",
+                "La saturation des raffineries et la baisse du prix des métaux"
+            ],
+            a: 1,
+            e: "Principalement deux causes guident la transition : écologique (réchauffement climatique, émissions) et économique (fuel efficiency, coûts d'exploitation réduits, indépendance fossile)."
+        },
+        {
+            q: "Qu'est-ce qu'un véhicule MHEV (Mild Hybrid) de manière technologique ?",
+            o: [
+                "Un véhicule qui permet une propulsion 100% électrique à haute vitesse",
+                "Un hybride léger où le système électrique assiste le thermique sans jamais permettre une propulsion 100% électrique autonome",
+                "Un véhicule équipé d'une pile à combustible alimentée à l'hydrogène gazeux",
+                "Un véhicule uniquement rechargeable en courant continu (DC)"
+            ],
+            a: 1,
+            e: "MHEV (Mild Hybrid Electric Vehicle) est une hybridation légère. Le système MHSG aide le moteur thermique lors du démarrage et des accélérations, mais ne propulse jamais le véhicule seul de façon 100% électrique."
+        },
+        {
+            q: "Quelle est la tension électrique habituelle et la position de la batterie spécifique d'un MHEV ?",
+            o: [
+                "Batterie 12V d'origine uniquement, sous le capot moteur",
+                "Batterie haute tension de 400V, fixée directement sous le plancher central",
+                "Batterie de 48V (DC) généralement placée dans le coffre arrière (qui ne remplace pas celle de 12V)",
+                "Batterie AC triphasée intégrée dans le tableau de bord"
+            ],
+            a: 2,
+            e: "Les MHEV utilisent généralement une batterie spécifique de 48V (courant continu DC) logée dans le coffre arrière. Cette batterie assiste le MHSG et coexiste avec la batterie classique de 12V."
+        },
+        {
+            q: "Dans un hybride classique HEV, quels sont les rôles respectifs des deux machines électriques MG1 et MG2 ?",
+            o: [
+                "MG1 gère les essuie-glaces et MG2 gère la climatisation habitacle",
+                "MG1 s'occupe de la propulsion à haute vitesse ; MG2 sert uniquement à démarrer la radio",
+                "MG1 démarre principalement le thermique et recharge la batterie HT ; MG2 s'occupe de la propulsion et de la récupération d'énergie",
+                "Les deux moteurs tournent obligatoirement à la même vitesse continue imposée par l'alternateur"
+            ],
+            a: 2,
+            e: "MG1 (P1/HSG) est de faible puissance (8-45 kW) et sert à démarrer l'ICE et à générer de l'électricité. MG2 (P2) est de forte puissance (30-100 kW) et assure la propulsion et la régénération cinétique lors du freinage."
+        },
+        {
+            q: "Quelle est la spécificité visuelle caractéristique externe typique d'un PHEV par rapport à un HEV classique ?",
+            o: [
+                "La présence de jantes en alliage léger obligatoirement vertes",
+                "La possession de deux trappes d'accès (une pour le carburant, une autre pour la prise de recharge électrique)",
+                "L'absence totale de plaque d'immatriculation arrière",
+                "Un pot d'échappement doublé en acier inoxydable chromé"
+            ],
+            a: 1,
+            e: "Un PHEV (Plug-in Hybrid) est un hybride rechargeable. Sa spécificité physique est la présence de deux trappes d'accès : carburant liquide d'un côté, recharge électrique (AC/DC) de l'autre."
+        },
+        {
+            q: "Où se trouve installée la batterie haute tension d'un BEV (Véhicule 100% Électrique) et quelle est sa capacité typique ?",
+            o: [
+                "Sous le capot avant, d'une capacité de 1 à 3 kWh",
+                "Dans le coffre arrière, d'une capacité stricte de 8 à 25 kWh",
+                "Entre les essieux sous le plancher, d'une capacité importante de 40 à 100 kWh",
+                "À l'intérieur des panneaux de portes pour équilibrer la voiture"
+            ],
+            a: 2,
+            e: "La batterie haute tension d'un BEV (EV) est logée sous le plancher central pour abaisser le centre de gravité. Sa capacité est très importante, oscillant généralement entre 40 et 100 kWh."
+        },
+        {
+            q: "Quelle est la réaction chimique interne qui s'opère dans la pile à combustible (Fuel Cell) d'un FCEV pour produire l'électricité ?",
+            o: [
+                "La combustion thermique directe d'essence avec de l'azote de l'air",
+                "La combinaison électrochimique du dihydrogène (H2) et du dioxygène (O2) rejetant uniquement de l'eau pure (H2O)",
+                "La fission nucléaire contrôlée d'isotopes lourds de plomb",
+                "L'évaporation forcée d'acide sulfurique stocké à 700 bars"
+            ],
+            a: 1,
+            e: "Le cœur du système FCEV est la pile à combustible (Fuel Cell) convertissant l'hydrogène gazeux (H2) et l'oxygène (O2) en électricité avec pour unique résidu de l'eau pure : 2H2 + O2 -> 2H2O."
+        },
+        {
+            q: "Dans l'architecture hybride parallèle TMED, qu'est-ce qui permet d'isoler mécaniquement le moteur thermique pour rouler en 100% électrique ?",
+            o: [
+                "Un embrayage thermique spécial appelé 'Engine Clutch' (Dry ou Wet clutch)",
+                "La courroie d'accessoires qui se détend automatiquement",
+                "L'inversion de polarité du réseau 12V d'accessoires",
+                "Une liaison par engrenage planétaire verrouillé par un frein à main"
+            ],
+            a: 0,
+            e: "Dans une configuration TMED (Transmission Mounted), un embrayage d'accouplement thermique ('Engine Clutch') permet de découpler entièrement l'ICE de l'arbre de transmission pour rouler de façon purement électrique avec MG2."
+        },
+        {
+            q: "Dans le fonctionnement du Train Épicycloïdal (Power Split), à quoi sont reliés respectivement le planétaire, le porte-satellites et la couronne ?",
+            o: [
+                "Planétaire -> Roues ; Porte-satellites -> MG1 ; Couronne -> Batterie",
+                "Planétaire -> MG1 ; Porte-satellites -> Moteur Thermique (MCI) ; Couronne -> Roues (et MG2)",
+                "Planétaire -> Batterie HT ; Porte-satellites -> Roues ; Couronne -> MG1",
+                "Les trois éléments sont bloqués ensemble et reliés à la boîte de vitesses manuelle"
+            ],
+            a: 1,
+            e: "Dans le PSD Toyota, le Planétaire central (Sun) est relié à MG1 ; le Porte-satellites (Carrier) est solidaire du moteur thermique (MCI/ICE) ; la Couronne extérieure (Ring) est liée à la transmission vers les roues et à MG2."
+        },
+        {
+            q: "Qu'advient-il de la tension (V) et de la capacité (Ah) lors d'un raccordement de 4 batteries de 12V 50Ah en PARALLÈLE ?",
+            o: [
+                "La tension monte à 48V et la capacité reste à 50Ah",
+                "La tension reste à 12V et la capacité s'additionne pour atteindre 200Ah",
+                "Tension et capacité tombent toutes les deux à zéro",
+                "La tension passe en alternatif (AC) triphasé haute fréquence"
+            ],
+            a: 1,
+            e: "Le branchement en parallèle additionne les capacités tout en conservant la tension nominale identique : Tension = 12V, Capacité = 50 + 50 + 50 + 50 = 200 Ah."
+        }
+    ];
+
+    let currentQuestionIdx = 0;
+    let userScore = 0;
+    let quizSelectedOption = null;
+
+    function startQuiz() {
+        document.getElementById('quiz-start-view').classList.add('hidden');
+        document.getElementById('quiz-card-view').classList.remove('hidden');
+        currentQuestionIdx = 0;
+        userScore = 0;
+        showQuestion();
+    }
+
+    function showQuestion() {
+        quizSelectedOption = null;
+        document.getElementById('quiz-btn-next').classList.add('hidden');
+        document.getElementById('quiz-explanation-box').classList.add('hidden');
+
+        const qData = quizQuestions[currentQuestionIdx];
+        
+        document.getElementById('quiz-progress-text').innerText = `Question ${currentQuestionIdx + 1} sur ${quizQuestions.length}`;
+        const progressPct = ((currentQuestionIdx + 1) / quizQuestions.length) * 100;
+        document.getElementById('quiz-progress-bar').style.width = `${progressPct}%`;
+        document.getElementById('quiz-score-indicator').innerText = `Score: ${userScore}/${quizQuestions.length}`;
+
+        document.getElementById('quiz-question-text').innerText = qData.q;
+
+        const container = document.getElementById('quiz-options-container');
+        container.innerHTML = "";
+
+        qData.o.forEach((opt, idx) => {
+            const btn = document.createElement('button');
+            btn.className = "w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950/50 hover:bg-slate-950 text-xs text-slate-300 transition duration-200 focus:outline-none flex gap-3 items-start";
+            btn.innerHTML = `
+                <span class="w-5 h-5 rounded-full border border-slate-700 flex items-center justify-center font-bold text-[10px] bg-slate-900 text-slate-400 shrink-0 select-none">${String.fromCharCode(65 + idx)}</span>
+                <span class="leading-relaxed">${opt}</span>
+            `;
+            btn.onclick = () => submitAnswer(idx, btn);
+            container.appendChild(btn);
+        });
+    }
+
+    function submitAnswer(selectedIdx, clickedButtonElement) {
+        if(quizSelectedOption !== null) return;
+        
+        quizSelectedOption = selectedIdx;
+        const qData = quizQuestions[currentQuestionIdx];
+        const isCorrect = (selectedIdx === qData.a);
+
+        if(isCorrect) {
+            userScore++;
+            clickedButtonElement.classList.remove('border-slate-800', 'bg-slate-950/50');
+            clickedButtonElement.classList.add('border-emerald-500', 'bg-emerald-950/20', 'text-emerald-300');
+            clickedButtonElement.querySelector('span').className = "w-5 h-5 rounded-full border border-emerald-500 flex items-center justify-center font-bold text-[10px] bg-emerald-500 text-white shrink-0";
+            
+            document.getElementById('quiz-explanation-status').innerText = "Correct ! ✔";
+            document.getElementById('quiz-explanation-status').className = "font-bold block mb-1 text-emerald-400";
+        } else {
+            clickedButtonElement.classList.remove('border-slate-800', 'bg-slate-950/50');
+            clickedButtonElement.classList.add('border-rose-500', 'bg-rose-950/20', 'text-rose-300');
+            clickedButtonElement.querySelector('span').className = "w-5 h-5 rounded-full border border-rose-500 flex items-center justify-center font-bold text-[10px] bg-rose-500 text-white shrink-0";
+            
+            const optionsButtons = document.getElementById('quiz-options-container').children;
+            const correctBtn = optionsButtons[qData.a];
+            if(correctBtn) {
+                correctBtn.classList.add('border-emerald-500/50', 'bg-emerald-950/10', 'text-emerald-400');
+            }
+
+            document.getElementById('quiz-explanation-status').innerText = "Incorrect ! ❌";
+            document.getElementById('quiz-explanation-status').className = "font-bold block mb-1 text-rose-400";
+        }
+
+        document.getElementById('quiz-explanation-text').innerText = qData.e;
+        document.getElementById('quiz-explanation-box').classList.remove('hidden');
+        document.getElementById('quiz-btn-next').classList.remove('hidden');
+        document.getElementById('quiz-score-indicator').innerText = `Score: ${userScore}/${quizQuestions.length}`;
+    }
+
+    function nextQuizQuestion() {
+        currentQuestionIdx++;
+        if(currentQuestionIdx < quizQuestions.length) {
+            showQuestion();
+        } else {
+            showQuizResults();
+        }
+    }
+
+    function showQuizResults() {
+        document.getElementById('quiz-card-view').classList.add('hidden');
+        document.getElementById('quiz-results-view').classList.remove('hidden');
+
+        const scorePct = Math.round((userScore / quizQuestions.length) * 100);
+        document.getElementById('res-score-pct').innerText = `${scorePct}%`;
+        document.getElementById('cert-score').innerText = `${scorePct}%`;
+        document.getElementById('cert-rand-id').innerText = Math.floor(1000 + Math.random() * 9000);
+
+        const msgBox = document.getElementById('res-score-message');
+        const certDownloadBtn = document.getElementById('btn-cert-download');
+        const certMockup = document.getElementById('certificate-mockup');
+
+        if(scorePct >= 80) {
+            msgBox.innerHTML = `
+                <strong class="text-emerald-400 block text-base mb-1">Félicitations ! Test validé.</strong>
+                Vous avez démontré une excellente maitrise théorique et pratique des architectures électrifiées (MHEV, HEV, PHEV, BEV, FCEV). Votre certificat officiel est maintenant débloqué.
+            `;
+            certDownloadBtn.classList.remove('hidden');
+            certMockup.classList.remove('hidden');
+        } else {
+            msgBox.innerHTML = `
+                <strong class="text-rose-400 block text-base mb-1">Test non validé.</strong>
+                Il vous faut au minimum <strong class="text-white">80%</strong> de réussite pour obtenir votre attestation officielle. Réétudiez attentivement les fiches techniques de l'application et retentez votre chance !
+            `;
+            certDownloadBtn.classList.add('hidden');
+            certMockup.classList.add('hidden');
+        }
+    }
+
+    function resetQuiz() {
+        document.getElementById('quiz-results-view').classList.add('hidden');
+        document.getElementById('quiz-start-view').classList.remove('hidden');
+    }
+
+    function downloadCertificate() {
+        window.print();
+    }
+
+    // ONLOAD TRIGGER INITIALIZATION
+    window.onload = function() {
+        // High DPI Canvas adjustments
+        const dpr = window.devicePixelRatio || 1;
+        const rect = canvasPlanetary.getBoundingClientRect();
+        canvasPlanetary.width = rect.width * dpr;
+        canvasPlanetary.height = rect.height * dpr;
+        ctxPlanetary.scale(dpr, dpr);
+
+        // Start live loops
+        renderPlanetaryFrame();
+        updateOhmSimulator();
+        renderHydraulicFrame();
+        updateOscilloscope();
+        renderOscilloscopeFrame();
+        setBatteryAssembly('series');
+    };
+
+    window.onresize = function() {
+        // Redraw scaling if window resizes
+        const dpr = window.devicePixelRatio || 1;
+        const rect = canvasPlanetary.getBoundingClientRect();
+        if (rect.width > 0) {
+            canvasPlanetary.width = rect.width * dpr;
+            canvasPlanetary.height = rect.height * dpr;
+            ctxPlanetary.scale(dpr, dpr);
+        }
+    };
+
+</script>
+</body>
+</html>
